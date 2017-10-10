@@ -18,6 +18,7 @@ encoding//src/AttackTempleModel/DirectCondition.py=gbk
 encoding//src/AttackTempleModel/InDirectCondition.py=gbk
 encoding//src/AttackTempleModel/RelativeLocation.py=gbk
 encoding//src/AttackTempleModel/Vulnerability.py=gbk
+encoding//src/Main/Graph.py=gbk
 encoding//src/Main/main.py=gbk
 encoding//src/NetworkModel/CommunicationLink.py=gbk
 encoding//src/NetworkModel/CredentialsStore.py=gbk
