@@ -28,3 +28,4 @@ encoding//src/NetworkModel/NetworkHost.py=gbk
 encoding//src/NetworkModel/NetworkInterface.py=gbk
 encoding//src/NetworkModel/RoutingTable.py=gbk
 encoding//src/NetworkModel/SoftwareApplication.py=gbk
+encoding//src/NetworkModel/TargetNetwork.py=gbk
