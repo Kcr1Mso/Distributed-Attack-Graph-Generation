@@ -25,5 +25,4 @@ class AttackGraph(object):
         Constructor
         '''
         pass
-    
         

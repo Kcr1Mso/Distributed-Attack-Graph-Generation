@@ -11,8 +11,8 @@ class CommunicationLink(object):
     classdocs
     '''
 
-    SourceNetworkInterface=NetworkInterface()
-    TargetNetworkInterface=NetworkInterface()
+    SourceNetworkInterface=NetworkInterface
+    TargetNetworkInterface=NetworkInterface
     
     
     

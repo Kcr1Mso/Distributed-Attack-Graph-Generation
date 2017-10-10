@@ -16,6 +16,6 @@ class Privilege(AttackElementNode):
         '''
         Constructor
         '''
-
+        AttackElementNode.__init__(self, IPAddress, CPEId, ApplicationName)
         self.Category=Category
         

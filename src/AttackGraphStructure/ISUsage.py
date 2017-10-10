@@ -12,9 +12,9 @@ class ISUsage(AttackElementNode):
     '''
     ISUsage=''      #string
 
-    def __init__(self, InEdges, OutEdges, IPAdress, CPEId, ApplicationName, ISUsage):
+    def __init__(self, IPAddress, CPEId, ApplicationName, ISUsage):
         '''
         Constructor
         '''
-        AttackElementNode.__init__(self, InEdges, OutEdges, IPAdress, CPEId, ApplicationName)
+        AttackElementNode.__init__(self, IPAddress, CPEId, ApplicationName)
         self.ISUsage=ISUsage

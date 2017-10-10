@@ -22,5 +22,4 @@ class AttackGraphEdge(object):
         '''
         Constructor
         '''
-        self.SourceNode=AttackGraphNode()
-        self.TargetNode=AttackGraphNode()
+        pass

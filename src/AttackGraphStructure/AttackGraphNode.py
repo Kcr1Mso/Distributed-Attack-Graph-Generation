@@ -4,7 +4,7 @@ Created on 2017Äê9ÔÂ26ÈÕ
 
 @author: RHy0ThoM
 '''
-from AttackGraphStructure.AttackGraphEdge import AttackGraphEdge
+
 class AttackGraphNode(object):
     '''
     classdocs
@@ -17,5 +17,4 @@ class AttackGraphNode(object):
         '''
         Constructor
         '''
-        self.InEdges=AttackGraphEdge()
-        self.OutEdges=AttackGraphEdge()
+        pass
