@@ -1,0 +1,61 @@
+# coding=gbk
+'''
+Created on 2017年9月26日
+
+@author: RHy0ThoM
+'''
+from inspect import stack
+
+
+def PERFORMDFS(RHG,IPRGS):
+    '''
+    RHG    Reachability hyper-graph
+    IPRGS    initial attacker privileges
+    '''
+    
+    MainStack=stack()       #Create Search Main Stack
+    
+    for ip in IPRGS :
+        ips = PrivilegeStatus()                                #特权状态类？
+        ips.setExpanded(true)                                  # 设置展开
+        WriteToSharedMemory(ip,ips)                            # 写入共享内存
+        MainStack.push(ip)
+        foundPrivileges.add(ip)                                # 发现特权
+    while true :
+        if MainStack.siza() > 0:
+            cp = MainStack.pop()                               # 在主堆栈上有权限的情况下继续进行搜索
+        else:
+            eps = GetWorkFromOtherAgents()                     # 从其他代理人那里得到工作
+            if eps.size() == 0 :
+                break
+            else:
+                MainStack.push(eps)
+                foundPrivileges.addAll(eps)
+                continue
+        hv = FindVertexForPriv(cp,RHG)                         # 找到一个顶点
+        ches = FindContainingEdges(hv,RHG)                     # 找到包含边缘
+        gprgs = List()                                         # List类？ 单纯的表？
+        for he in ches :
+            tsas = FindTargetSoftwareApps(he)                  # 查找目标软件应用程序
+            for tsa in tsas :
+                for v in tsa.vulnerabilities():                # tsa的漏洞
+                    reqorgs = CheckExploitability(v,cp,tsa)    # 检查利用
+                    if reqprgs != null :                       # 漏洞可以被攻击者利用
+                        vgps = FindGainedPrivileges(v,cp,tsa)  # 寻找获得特权
+                        gprgs.addAll(vgps)
+                        UpdateAttackGraph(v,reqprgs,vgps,tsa)
+                for tis in tsa.infoSources():                  # 信息来源
+                    reqprgs = CheckExploitability(tis,cp,tsa)  # 检查利用
+                    if reqprgs != null:                        # 信息源可以被攻击者使用
+                        isgps = FindGainedPrivileges(tis,cp,tsa)
+                        gprgs.addAll(isgps)
+                        UpdateAttackGraph(tis,reqprgs,isgps,tsa)
+        for gp in gprgs :
+            newgps = PrivilegeStatus()
+            newgps.setExpanded(true)
+            oldgps = ReadAndUpdateSharedMemory(gp,newgps)      # 读和更新共享内存
+            # 读取和更新共享内存是一种原子操作，可更新其输入权限的状态并返回其旧状态
+            if oldgps.expanded == false :
+                MainStack.push(gp)
+            foundPrivileges.add(gp)  
+    

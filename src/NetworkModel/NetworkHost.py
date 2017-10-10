@@ -1,0 +1,30 @@
+# coding=gbk
+'''
+Created on 2017Äê9ÔÂ26ÈÕ
+
+@author: RHy0ThoM
+'''
+
+class NetworkHost(object):
+    '''
+    classdocs
+    '''
+    NetworkInterface=[]
+    '''
+    NetworkInterface
+    a list of network interface contained by the network host
+    '''
+    SoftwareApplication=[]    
+    '''
+    SoftwareApplication
+    a list of installed software application on the network host
+    '''
+
+
+    def __init__(self, NetworkInterface, SoftwareApplication):
+        '''
+        Constructor
+        '''
+        self.NetworkInterface=NetworkInterface
+        self.SoftwareApplication=SoftwareApplication
+        

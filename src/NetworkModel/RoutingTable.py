@@ -1,0 +1,19 @@
+# coding=gbk
+'''
+Created on 2017Äê9ÔÂ26ÈÕ
+
+@author: RHy0ThoM
+'''
+from NetworkModel.InformationSource import InformationSource
+
+class RoutingTable(InformationSource):
+    '''
+    classdocs
+    '''
+
+
+    def __init__(self, name, ReferencedSoftware, Preconditions, Postconditions, params):
+        '''
+        Constructor
+        '''
+        InformationSource.__init__(self, name, ReferencedSoftware, Preconditions, Postconditions)

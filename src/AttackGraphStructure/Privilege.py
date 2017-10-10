@@ -1,0 +1,21 @@
+# coding=gbk
+'''
+Created on 2017Äê9ÔÂ26ÈÕ
+
+@author: RHy0ThoM
+'''
+from AttackGraphStructure.AttackElementNode import AttackElementNode
+
+class Privilege(AttackElementNode):
+    '''
+    classdocs
+    '''
+    Category=''     #Enum
+
+    def __init__(self,IPAddress, CPEId, ApplicationName, Category):
+        '''
+        Constructor
+        '''
+
+        self.Category=Category
+        

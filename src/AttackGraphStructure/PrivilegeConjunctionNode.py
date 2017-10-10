@@ -1,0 +1,20 @@
+# coding=gbk
+'''
+Created on 2017Äê9ÔÂ26ÈÕ
+
+@author: RHy0ThoM
+'''
+from AttackGraphStructure.AttackGraphNode import AttackGraphNode
+
+class PrivilegeConjunctionNode(AttackGraphNode):
+    '''
+    classdocs
+    '''
+    
+
+
+    def __init__(self, params):
+        '''
+        Constructor
+        '''
+        

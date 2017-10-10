@@ -1,0 +1,25 @@
+# coding=gbk
+'''
+Created on 2017Äê9ÔÂ26ÈÕ
+
+@author: RHy0ThoM
+'''
+from NetworkModel.NetworkInterface import NetworkInterface
+
+class CommunicationLink(object):
+    '''
+    classdocs
+    '''
+
+    SourceNetworkInterface=NetworkInterface()
+    TargetNetworkInterface=NetworkInterface()
+    
+    
+    
+    def __init__(self, SourceNetworkInterface,TargetNetworkInterface):
+        '''
+        Constructor
+        '''
+        self.SourceNetworkInterface=SourceNetworkInterface
+        self.TargetNetworkInterface=TargetNetworkInterface
+        

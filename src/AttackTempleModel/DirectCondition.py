@@ -1,0 +1,21 @@
+# coding=gbk
+'''
+Created on 2017Äê9ÔÂ26ÈÕ
+
+@author: RHy0ThoM
+'''
+
+from asyncio.locks import Condition
+
+class DirectCondition(Condition):
+    '''
+    classdocs
+    '''
+    CPEId=''        #string
+
+    def __init__(self, Category, RelativeLocation, CPEId):
+        '''
+        Constructor
+        '''
+        Condition.__init__(self,Category,RelativeLocation)
+        self.CPEId=CPEId

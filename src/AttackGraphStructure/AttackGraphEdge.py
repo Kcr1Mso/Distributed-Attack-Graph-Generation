@@ -1,0 +1,26 @@
+# coding=gbk
+'''
+Created on 2017Äê9ÔÂ26ÈÕ
+
+@author: RHy0ThoM
+'''
+from AttackGraphStructure.AttackGraphNode import AttackGraphNode
+
+class AttackGraphEdge(object):
+    '''
+    classdocs
+    '''
+    
+    SourceNode=AttackGraphNode
+    TargetNode=AttackGraphNode
+    
+    '''
+    SourceNode denotes the source and TargetNode denotes the target node for the edge e. 
+    '''
+    
+    def __init__(self):
+        '''
+        Constructor
+        '''
+        self.SourceNode=AttackGraphNode()
+        self.TargetNode=AttackGraphNode()

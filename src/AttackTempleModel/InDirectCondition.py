@@ -1,0 +1,22 @@
+# coding=gbk
+'''
+Created on 2017Äê9ÔÂ26ÈÕ
+
+@author: RHy0ThoM
+'''
+
+from AttackTempleModel.Condition import Condition
+
+class InDirectCondition(Condition):
+    '''
+    classdocs
+    '''
+    ProductType=''      #enum
+
+    def __init__(self, Category, RelativeLocation, ProductType):
+        '''
+        Constructor
+        '''
+        Condition.__init__(self,Category,RelativeLocation)
+        self.ProductType=ProductType
+        
