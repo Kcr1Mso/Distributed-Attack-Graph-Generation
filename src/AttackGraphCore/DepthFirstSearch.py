@@ -1,5 +1,5 @@
 # coding=gbk
-'''
+''' 
 Created on 2017年9月26日
 
 @author: RHy0ThoM
@@ -21,7 +21,8 @@ def PERFORMDFS(RHG,IPRGS):
     
     for ip in IPRGS :           #initial privileges
         '''
-        
+        examining the Boolen expansion status of it stored in the virtual 
+        shared memory
         '''
         ips = PrivilegeStatus()         #initial privileges status
         ips.setExpanded(True)                                  
