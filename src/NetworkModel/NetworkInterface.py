@@ -4,10 +4,8 @@ Created on 2017Äê9ÔÂ26ÈÕ
 
 @author: RHy0ThoM
 '''
-from NetworkModel.NetworkHost import NetworkHost
-from NetworkModel.CommunicationLink import CommunicationLink
 
-class NetworkInterface(NetworkHost):
+class NetworkInterface(object):
     '''
     classdocs
     
@@ -15,16 +13,34 @@ class NetworkInterface(NetworkHost):
     
     <IPAdress,Link,Host>
     '''
-    IPAdress=''         #string    the IP address associated with the network interface
-    Link=CommunicationLink()        #the communication link connected to the network interface
-    Host=NetworkHost()          #the network host containing the network interface
+    IPAddress=''         #string    the IP address associated with the network interface
+    Link=[]                   #the communication link connected to the network interface
+    Host=0          #the network host containing the network interface
 
-    def __init__(self, NetworkInterface, SoftwareApplication, IPAdress,Link,Host):
+    def __init__(self,IPAddress,Link,Host):
         '''
         Constructor
         '''
-        NetworkHost.__init__(self, NetworkInterface, SoftwareApplication)
-        self.IPAdress=IPAdress
+        self.IPAddress=IPAddress
         self.Link=Link
         self.Host=Host
+        
+        
+class CommunicationLink(object):
+    '''
+    classdocs
+    '''
+
+    SourceNetworkInterface=NetworkInterface
+    TargetNetworkInterface=NetworkInterface
+    
+    
+    
+    def __init__(self, SourceNetworkInterface,TargetNetworkInterface):
+        '''
+        Constructor
+        '''
+        self.SourceNetworkInterface=SourceNetworkInterface
+        self.TargetNetworkInterface=TargetNetworkInterface
+  
         

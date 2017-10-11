@@ -21,10 +21,9 @@ class NetworkHost(object):
     '''
 
 
-    def __init__(self, NetworkInterface, SoftwareApplication):
+    def __init__(self):
         '''
         Constructor
         '''
-        self.NetworkInterface=NetworkInterface
-        self.SoftwareApplication=SoftwareApplication
-        
+        pass
+    

@@ -24,3 +24,5 @@ def FindGainedPrivileges(SP,CP,TSA):
             gprgs = FormPrivileges(psc,CP.softwareApp,TSA)
     return gprgs
 
+def FormPrivileges(psc,CP.softwareApp,TSA):
+    pass

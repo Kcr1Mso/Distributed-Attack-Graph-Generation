@@ -4,6 +4,7 @@ Created on 2017Äê10ÔÂ9ÈÕ
 
 @author: RHy0ThoM
 '''
+
 from AttackGraphStructure.Privilege import Privilege
 from AttackGraphStructure.PrivilegeConjunctionNode import PrivilegeConjunctionNode
 from AttackGraphStructure.VExploit import VExploit

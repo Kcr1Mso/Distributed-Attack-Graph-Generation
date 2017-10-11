@@ -16,7 +16,7 @@ class SoftwareApplication(object):
     '''
     CPEId denotes the software product identifier¡£
     '''
-    HostIPAdress=''     #string
+    HostIPAdDress=''     #string
     '''
     HostIPAddress denotes the IP address on which the software application is serving
     '''
@@ -33,12 +33,12 @@ class SoftwareApplication(object):
     InformationSources is a list of information sources contained by the software application such as
      credentials store, cookies, DNS table, routing table, databases.
     '''
-    def __init__(self, CPEId, HostIPAdress, Port, BackendApplication, InformationSource):
+    def __init__(self, CPEId, HostIPAddress, Port, BackendApplication, InformationSource):
         '''
         Constructor
         '''
         self.CPEId=CPEId
-        self.HostIPAdress=HostIPAdress
+        self.HostIPAddress=HostIPAddress
         self.Port=Port
         self.BackendApplication=BackendApplication
         self.InformationSource=InformationSource
