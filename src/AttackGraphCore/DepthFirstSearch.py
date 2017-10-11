@@ -11,6 +11,7 @@ from AttackGraphCore.UpdateAttackGraph import UpdateAttackGraph
 from _overlapped import NULL
 
 def PERFORMDFS(RHG,IPRGS):
+    
     '''
     RHG    Reachability hyper-graph
     IPRGS    initial attacker privileges
@@ -18,12 +19,19 @@ def PERFORMDFS(RHG,IPRGS):
     
     MainStack=stack()       #Create Search Main Stack
     
-    for ip in IPRGS :
-        ips = PrivilegeStatus()                                #特权状态类？
-        ips.setExpanded(True)                                  # 设置展开
-        WriteToSharedMemory(ip,ips)                            # 写入共享内存
+    for ip in IPRGS :           #initial privileges
+        '''
+        
+        '''
+        ips = PrivilegeStatus()         #initial privileges status
+        ips.setExpanded(True)                                  
+        '''
+        if the privilege has not already been expanded,the agent sets its expansion status to true
+        and pushes the privilege to its search stack to expand it later
+        '''
+        WriteToSharedMemory(ip,ips)                            
         MainStack.push(ip)
-        foundPrivileges.add(ip)                                # 发现特权
+        foundPrivileges.add(ip)                                
     while True :
         if MainStack.siza() > 0:
             cp = MainStack.pop()                               # 在主堆栈上有权限的情况下继续进行搜索

@@ -41,11 +41,26 @@ DMZ.NetworkInterface.append(NetworkInterface('75.62.132.64',
                                              80
                                              ))
 
-DMZ.SoftwareApplication.append(SoftwareApplication('cpe:/a:apache:http_server:2.4.3',
+InternetExplorer=SoftwareApplication('cpe:/a:microsoft:internet_explorer:10',
+                                     '75.62.132.65',
+                                     34,
+                                     [],
+                                     [],
+                                     )
+
+MozillaThunderbird=SoftwareApplication('cpe:/a:mozilla:thunderbird:17.0.2',
+                                       '75.62.132.65',
+                                       48,
+                                       [],
+                                       [],
+                                       )
+
+DMZ.SoftwareApplication.append(SoftwareApplication('cpe:/o:mircosoft:windows_xp::sp2',
                                                    '75.62.132.65',
                                                    80,
-                                                   [],
+                                                   [InternetExplorer,MozillaThunderbird],
                                                    [],
                                                    ))
 print(DMZ.SoftwareApplication[0].HostIPAddress)
 print(Organization.NetworkInterface[0].Link.TargetNetworkInterface.SoftwareApplication[0].HostIPAddress)
+print(DMZ.SoftwareApplication[0].BackendApplication[0].CPEId)

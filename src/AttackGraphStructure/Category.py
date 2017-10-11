@@ -19,9 +19,4 @@ class Category(Enum):
                   
                   
                   )
-
-    def __init__(self):
-        '''
-        Constructor
-        '''
         
