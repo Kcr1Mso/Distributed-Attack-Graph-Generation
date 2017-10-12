@@ -64,3 +64,4 @@ DMZ.SoftwareApplication.append(SoftwareApplication('cpe:/o:mircosoft:windows_xp:
 print(DMZ.SoftwareApplication[0].HostIPAddress)
 print(Organization.NetworkInterface[0].Link.TargetNetworkInterface.SoftwareApplication[0].HostIPAddress)
 print(DMZ.SoftwareApplication[0].BackendApplication[0].CPEId)
+print(DMZ.SoftwareApplication)

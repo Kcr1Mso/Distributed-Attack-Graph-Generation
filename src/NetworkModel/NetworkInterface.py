@@ -4,6 +4,7 @@ Created on 2017Äê9ÔÂ26ÈÕ
 
 @author: RHy0ThoM
 '''
+from NetworkModel.NetworkHost import NetworkHost
 
 class NetworkInterface(object):
     '''
@@ -15,7 +16,7 @@ class NetworkInterface(object):
     '''
     IPAddress=''         #string    the IP address associated with the network interface
     Link=[]                   #the communication link connected to the network interface
-    Host=0          #the network host containing the network interface
+    Host=NetworkHost          #the network host containing the network interface
 
     def __init__(self,IPAddress,Link,Host):
         '''
