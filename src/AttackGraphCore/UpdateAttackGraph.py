@@ -6,6 +6,10 @@ Created on 2017年9月26日
 '''
 
 from AttackGraphStructure.AttackGraph import AttackGraph
+from AttackGraphStructure.AttackElementNode import AttackGraphNode
+from AttackTemplateModel.Vulnerability import Vulnerability
+from NetworkModel.SoftwareApplication import SoftwareApplication
+from NetworkModel.InformationSource import InformationSource
 
 partialAttackGraph =  AttackGraph()                            # 部分攻击图 攻击图类
 #更新攻击图
@@ -15,27 +19,41 @@ def UpdateAttackGraph(SP,REQPS,GPS,TSA):                       #
 # REQPS是必需的权限
 # GPS是获得的特权
 # TSA是目标软件应用
-    if SP in AttackGraph.VExploit:                                   #漏洞   如何表示存在于？
+    if  isinstance(SP , Vulnerability):                        #漏洞   如何表示存在于？
         exp = CreateVunlnerabilityExploitNode(SP,TSA)          #创建漏洞利用节点
     else:
         exp = CreateInformationSourceUsageNode(SP,TSA)         #创建信息源使用节点
-    if REQPS.size()>1:
+    if len(REQPS)>1:
         prjc = PrivilegeConjunction()                          #特权连接  类？
         partialAttackGraph.addNode(prjc)                       #部分攻击图 添加节点
         for reqp in REQPS :
             partialAttackGraph.addEdge(reqp,prjc)              #部分攻击图 添加边
     else:
-        if REQPS.size() == 1:
-            partialAttackGraph.addEdge(REQPS.get(0),exp)
+        if len(REQPS) == 1:
+            partialAttackGraph.addEdge(REQPS(0),exp)
     for gp in GPS :
         partialAttackGraph.addEdge(exp,gp)
 
 
-def CreateVunlnerabilityExploitNode(SP,TSA):
-    pass
+#创建漏洞节点
+def CreateVunlnerabilityExploitNode(SP = Vulnerability(),TSA = SoftwareApplication()):
+    Node = AttackGraphNode()
+    Node.Type = 'VulnerabilityExploit'
+    Node.CPE_ID = TSA.CPE_ID
+    Node.CVE_ID = SP.CVE_ID
+    Node.IPAddress = TSA.HostIP
+    Node.ApplicationName = TSA.Name
+    return Node
 
-def CreateInformationSourceUsageNode(SP,TSA):
-    pass
+#创建信息源使用节点
+def CreateInformationSourceUsageNode(SP = InformationSource(),TSA = SoftwareApplication()):
+    Node = AttackGraphNode()
+    Node.Type = 'InformationSource'
+    Node.CPE_ID = TSA.CPE_ID
+    Node.IPAddress = TSA.HostIP
+    Node.ApplicationName = TSA.Name
+    Node.InformationSourceName = SP.Name
+    return Node
 
 def PrivilegeConjunction():
     pass

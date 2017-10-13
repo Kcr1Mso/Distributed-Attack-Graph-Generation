@@ -29,8 +29,8 @@ CommunicationLink_7=CommunicationLink(LAN1,LAN2)
 
 TargetNetwork=HyperGraph()
 
-TargetNetwork.HGNode=[Organization,DMZ,ALAN,LAN1,LAN2]
-TargetNetwork.HGEdge=[CommunicationLink_1,CommunicationLink_2,CommunicationLink_3,CommunicationLink_4,
+TargetNetwork.Node=[Organization,DMZ,ALAN,LAN1,LAN2]
+TargetNetwork.Edge=[CommunicationLink_1,CommunicationLink_2,CommunicationLink_3,CommunicationLink_4,
                       CommunicationLink_5,CommunicationLink_6,CommunicationLink_7
                       ]
 

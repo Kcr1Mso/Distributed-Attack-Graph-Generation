@@ -6,6 +6,10 @@ Created on 2017年10月11日
 '''
 #合并部分攻击图
 
+from AttackGraphStructure.AttackGraph import AttackGraph
+from AttackGraphStructure.AttackGraphNode import AttackGraphNode
+from _overlapped import NULL
+
 def MergrPartialAttackGraphs(PGS):  
     # PGS是由搜索代理产生的部分攻击图
     if PGS.size() ==0:                                        #PGS具有size方法
@@ -14,7 +18,7 @@ def MergrPartialAttackGraphs(PGS):
 # 更新攻击图的权限
     phm = FormHashMap(ag.privileges())                        #表格哈希图(ag的特权)
 # 由其标识符映射的权限的哈希
-    for prag in PSG :                                         #PSG应该是一个表
+    for prag in PGS :                                         #PSG应该是一个表
         for p in prag.privileges():                           #p是prag的特权
             esp = phm.get(p.id())                             #phm具有get方法，p具有id方法
             if esp != NULL:
@@ -29,15 +33,26 @@ def MergrPartialAttackGraphs(PGS):
                 ag.addNodeWithItsSubTree(p)                   #添加节点与它的子树
                 phm.put(p.id(),p)
 # 删除攻击图的重复漏洞利用和信息源使用节点
-    exhm = HashMap()                                          #哈希表类
+    exhm = {}                                                 #哈希表类? 在python中由字典代替
     expl = ag.vulnerabilityExploits                           #ag具有 漏洞利用 的属性
-    expl.addAll(ag.informationSourceUsages)                   #添加所有方法   ag的属性 信息来源用途
+    expl.extend(ag.informationSourceUsages)                   #添加所有方法   ag的属性 信息来源用途
     for expn in expl:
-        esxpn = exhm.get(expn.id())                           #exhm同phm一样
-        if esxpn != null :
+        esxpn = exhm.get(expn.IPAddress,NULL)                 #exhm同phm一样
+        if esxpn != NULL :
             for onn in esxpn.outNeighbourNodes():             #esxpn的外邻居节点
-                ag,addEdge(expn,onn)                          #添加边
+                ag.addEdge(expn,onn)                          #添加边
             UpdateInEdgesOfExistingNode(esxpn,expn)           #现有节点边缘更新
-            ag,removeNode(esxpn)                              #删除节点esxpn
-        ehm.put(expn.id(),expn)                               #expn出ehm的栈
+            ag.removeNode(esxpn)                              #删除节点esxpn
+        exhm.update({expn.IPAddress:expn})                        #expn出ehm的栈
     return ag
+
+#转化为哈希表
+def FormHashMap(ps = []):
+    find_ps = {}
+    for i in ps:
+        find_ps.update({i.IPAddress:i})
+    return find_ps
+
+#更新节点并添加入边
+def UpdateInEdgesOfExistingNode(nodeA=AttackGraphNode(),nodeB=AttackGraphNode()):
+    nodeB.inEdges.extend(nodeA.inEdges.extend)

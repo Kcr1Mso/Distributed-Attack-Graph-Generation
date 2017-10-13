@@ -14,6 +14,7 @@ from NetworkModel.HyperGraph import HyperGraph
 
 RHG=HyperGraph()
 
+
 def PERFORMDFS(RHG,IPRGS):
     
     '''
@@ -22,74 +23,53 @@ def PERFORMDFS(RHG,IPRGS):
     '''
     
     MainStack=stack()       #Create Search Main Stack
+    SharedMemory={}
+    foundPrivileges =  []
     
-    for ip in IPRGS :           #initial privileges
-        '''
-        examining the Boolen expansion status of it stored in the virtual 
-        shared memory
-        '''
-        #ips = PrivilegeStatus()         #initial privileges status
-        #ips.setExpanded(True)                                  
-        '''
-        if the privilege has not already been expanded,the agent sets its expansion status to true
-        and pushes the privilege to its search stack to expand it later
-        '''
-        #WriteToSharedMemory(ip,ips)                            
+    for ip in IPRGS :
+        ips = PrivilegeStatus()                                #特权状态类？   应该是个网络主机
+        ips.setExpanded(True)                                  # 设置展开
+        SharedMemory.update({ip:ips})                          # 写入共享内存
         MainStack.push(ip)
-        foundPrivileges.add(ip)                                
+        foundPrivileges.append(ip)                             # 发现特权
     while True :
-        if MainStack.siza() > 0:
-            cp = MainStack.pop()
-            '''                               
-             continue to the search while there are privileges on the main stack
-             '''
+        if MainStack.isEmpty == False:
+            cp = MainStack.pop()                               # 在主堆栈上有权限的情况下继续进行搜索
         else:
-            #eps = GetWorkFromOtherAgents()                     #request privileges from other agents to expand
-            #if eps.size() == 0 :
+            eps = GetWorkFromOtherAgents()                     # 从其他代理人那里得到工作
+            if len(eps) == 0 :                                 #eps为表？
                 break
-            #else:
-                #MainStack.push(eps)
-                #foundPrivileges.addAll(eps)
-                #continue
-        hv = FindVertexForPriv(cp,RHG)                         
-        ches = FindContainingEdges(hv,RHG)                     
-        gprgs=[]                                         
+            else:
+                MainStack.push(eps)
+                foundPrivileges.extend(eps)
+                continue
+        hv = RHG.findVertexForPriv(cp)                         # 找到一个顶点
+        ches = RHG.findContainingEdges(hv)                     # 找到包含边缘
+        gprgs = []                                             # List类？ 单纯的表？
         for he in ches :
-            tsas = FindTargetSoftwareApps(he)                  #find software application S related with P
+            tsas = FindTargetSoftwareApps(he)                  # 查找目标软件应用程序
             for tsa in tsas :
-                for v in tsa.vulnerabilities():                
-                    reqprgs = CheckExploitability(v,cp,tsa)    
-                    # check exploitability of vulnerabilities in reachable software application
-                    # check usability of information sources in reachable software applications
-                    if reqprgs != NULL :
-                        vgps = FindGainedPrivileges(v,cp,tsa)
-                        #find privileges gained from exploitable vulnerabilities and usable information sources
-                        gprgs.addAll(vgps)
+                for v in tsa.vulnerabilities():                # tsa的漏洞
+                    reqprgs = CheckExploitability(v,cp,tsa)    # 检查利用
+                    if reqprgs != NULL :                       # 漏洞可以被攻击者利用
+                        vgps = FindGainedPrivileges(v,cp,tsa)  # 寻找获得特权
+                        gprgs.extend(vgps)
                         UpdateAttackGraph(v,reqprgs,vgps,tsa)
-                        #update the partial attack graph managed by this agent with gained privileges
-                        #their corresponding exploited vulnerabilities and information sources
-                for tis in tsa.InformationSource():                  
-                    reqprgs = CheckExploitability(tis,cp,tsa)  
-                    if reqprgs != NULL:                        
+                for tis in tsa.infoSources():                  # 信息来源
+                    reqprgs = CheckExploitability(tis,cp,tsa)  # 检查利用
+                    if reqprgs != NULL:                        # 信息源可以被攻击者使用
                         isgps = FindGainedPrivileges(tis,cp,tsa)
-                        gprgs.addAll(isgps)
+                        gprgs.extend(isgps)
                         UpdateAttackGraph(tis,reqprgs,isgps,tsa)
-                        '''
         for gp in gprgs :
             newgps = PrivilegeStatus()
             newgps.setExpanded(True)
-            oldgps = ReadAndUpdateSharedMemory(gp,newgps)      # 读和更新共享内存
+            oldgps = SharedMemory.get(gp)      # 读和更新共享内存
+            SharedMemory.update({gp:newgps})
             # 读取和更新共享内存是一种原子操作，可更新其输入权限的状态并返回其旧状态
             if oldgps.expanded == False :
                 MainStack.push(gp)
-            foundPrivileges.add(gp)
-            '''  
-
-def foundPrivileges():
-    def add(ip):
-        pass
-    def addAll():
-        pass
+            foundPrivileges.append(gp)
 
 def WriteToSharedMemory(ip,ips):
     pass
@@ -97,21 +77,20 @@ def WriteToSharedMemory(ip,ips):
 def GetWorkFromOtherAgents():
     pass
 
-def PrivilegeStatus():
-    pass
 
-def FindVertexForPriv(cp,RHG):
-    hv=[]
-    for v in RHG.HGNode
-        if v.Privilege==cp
-            hv.append(v)
-    return hv           
+#权限状态类：用来标记权限是否遍历过
+class PrivilegeStatus:
+    def __init__(self, x = False):
+        self.expanded = x
+    def setExpanded(self, x = False):
+        self.expanded = x
 
-def FindContainingEdges():
-    pass
-
-def FindTargetSoftwareApps(he):         #find software application S related with P
-    return he.TargetNetworkInterface.Host.SoftwareApplication
+#查找目标软件应用程序
+def FindTargetSoftwareApps(he):
+    softwareApps = []
+    for i in he:
+        softwareApps.extend(i.SoftwareApplications)
+    return softwareApps
 
 def ReadAndUpdateSharedMemory():
     pass
