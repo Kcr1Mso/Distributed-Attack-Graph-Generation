@@ -24,6 +24,7 @@ encoding//src/Main/main.py=gbk
 encoding//src/NetworkModel/CommunicationLink.py=gbk
 encoding//src/NetworkModel/CredentialsStore.py=gbk
 encoding//src/NetworkModel/DNSRecords.py=gbk
+encoding//src/NetworkModel/HyperGraph.py=gbk
 encoding//src/NetworkModel/InformationSource.py=gbk
 encoding//src/NetworkModel/NetworkHost.py=gbk
 encoding//src/NetworkModel/NetworkInterface.py=gbk

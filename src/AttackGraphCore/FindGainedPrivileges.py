@@ -21,6 +21,8 @@ def FindGainedPrivileges(SP,CP,TSA):
     for postconditions 
     '''
     
+    gprgs=[]
+    
     for psc in SP.postConditions():
         if psc.ExistsIn == BA:                                
             for bsa in TSA.backendSoftwareApps():             

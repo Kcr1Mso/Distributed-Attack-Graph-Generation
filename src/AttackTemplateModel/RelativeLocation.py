@@ -11,10 +11,10 @@ class RelativeLocation(Enum):
     '''
     classdocs
     '''
-    RelativeLocation=Enum('Attacker Application',
-                          'Victim Application',
-                          'Backend Application', 
-                          'Intermediate Application'
+    RelativeLocation=Enum('AttackerApplication',
+                          'VictimApplication',
+                          'BackendApplication', 
+                          'IntermediateApplication'
                           )
 
     def __init__(self, params):

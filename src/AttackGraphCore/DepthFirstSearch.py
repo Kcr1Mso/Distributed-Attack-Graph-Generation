@@ -10,8 +10,9 @@ from AttackGraphCore.CheckExploitability import CheckExploitability
 from AttackGraphCore.UpdateAttackGraph import UpdateAttackGraph
 
 from _overlapped import NULL
+from NetworkModel.HyperGraph import HyperGraph
 
-
+RHG=HyperGraph()
 
 def PERFORMDFS(RHG,IPRGS):
     
@@ -52,7 +53,7 @@ def PERFORMDFS(RHG,IPRGS):
                 #continue
         hv = FindVertexForPriv(cp,RHG)                         
         ches = FindContainingEdges(hv,RHG)                     
-        gprgs = []                                         
+        gprgs=[]                                         
         for he in ches :
             tsas = FindTargetSoftwareApps(he)                  #find software application S related with P
             for tsa in tsas :
@@ -99,8 +100,12 @@ def GetWorkFromOtherAgents():
 def PrivilegeStatus():
     pass
 
-def FindVertexForPriv():
-    pass
+def FindVertexForPriv(cp,RHG):
+    hv=[]
+    for v in RHG.HGNode
+        if v.Privilege==cp
+            hv.append(v)
+    return hv           
 
 def FindContainingEdges():
     pass
