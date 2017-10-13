@@ -10,9 +10,9 @@ from AttackGraphStructure.AttackGraph import AttackGraph
 from AttackGraphStructure.AttackGraphNode import AttackGraphNode
 from _overlapped import NULL
 
-def MergrPartialAttackGraphs(PGS):  
+def MergrPartialAttackGraphs(PGS=[]):  
     # PGS是由搜索代理产生的部分攻击图
-    if PGS.size() ==0:                                        #PGS具有size方法
+    if PGS.size ==0:                                        #PGS具有size方法
         return AttackGraph()                                  #需定义攻击图函数
     ag = PGS.removeFirst()                                    #删除第一
 # 更新攻击图的权限

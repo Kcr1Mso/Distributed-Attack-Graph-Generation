@@ -10,6 +10,9 @@ from NetworkModel.NetworkInterface import NetworkInterface
 from NetworkModel.NetworkInterface import CommunicationLink
 from NetworkModel.SoftwareApplication import SoftwareApplication
 from NetworkModel.HyperGraph import HyperGraph
+from AttackGraphStructure.AttackGraph import AttackGraph
+from AttackGraphCore.MergrPartialAttackGraphs import MergrPartialAttackGraphs
+from AttackGraphCore.UpdateAttackGraph import partialAttackGraph
 
 if __name__ == '__main__':
 
@@ -73,4 +76,6 @@ if __name__ == '__main__':
     
     IPRGS=[]
     
-    DepthFirstSearch(TargetNetwork,IPRGS)
+    DepthFirstSearch.PERFORMDFS(TargetNetwork, IPRGS)
+    MergrPartialAttackGraphs(partialAttackGraph)
+    print()

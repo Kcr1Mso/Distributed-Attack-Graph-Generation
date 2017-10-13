@@ -29,4 +29,11 @@ def FindGainedPrivileges(SP,CP,TSA):
 
 
 def FormPrivileges(psc,softwareApp,TSA):
-    pass
+    for i in TSA.infoSources:
+        if psc in i.preConditions:
+            if softwareApp in i.ReferencedSoftware:
+                return i.postConditions
+    for i in TSA.vulnerabilities:
+        if psc in i.preConditions:
+            if softwareApp in i.ReferencedSoftware:
+                return i.postConditions

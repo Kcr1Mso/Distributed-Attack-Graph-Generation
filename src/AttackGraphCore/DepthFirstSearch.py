@@ -4,15 +4,56 @@ Created on 2017年9月26日
 
 @author: RHy0ThoM
 '''
-from inspect import stack
 from AttackGraphCore.FindGainedPrivileges import FindGainedPrivileges
 from AttackGraphCore.CheckExploitability import CheckExploitability
 from AttackGraphCore.UpdateAttackGraph import UpdateAttackGraph
 
 from _overlapped import NULL
 
+#栈操作出错
+class StackException(Exception):                  #栈操作出错
+    def __init__(self,data):
+        self.data=data
+    def __str__(self):
+        return self.data
 
-
+#主堆栈类
+class CreateMainStack:
+    def __init__(self, size = 20):
+        self.stack = []
+        self.size = size
+        self.top = -1
+    def setSize(self, size):
+        self.size = size
+    def push(self, element):
+        if self.isFull():
+            raise StackException('MainStackOverflow')
+        else:
+            self.stack.append(element)
+            self.top = self.top +1
+    def pop(self):
+        if self.isEmpty():
+            raise StackException('MainStackUnderflow')
+        else:
+            element = self.stack[-1]
+            self.top = self.top -1
+            del self.stack[-1]
+            return element
+    def Top(self):
+        return self.top
+    def empty(self):
+        self.stack = []
+        self.top = -1
+    def isEmpty(self):
+        if self.top == -1:
+            return True
+        else:
+            return False
+    def isFull(self):
+        if self.top == self.size -1:
+            return True
+        else:
+            return False
 
 def PERFORMDFS(RHG,IPRGS):
     
@@ -21,7 +62,7 @@ def PERFORMDFS(RHG,IPRGS):
     IPRGS    initial attacker privileges
     '''
     
-    MainStack=stack()       #Create Search Main Stack
+    MainStack=CreateMainStack()       #Create Search Main Stack
     SharedMemory={}
     foundPrivileges =  []
     
@@ -32,15 +73,15 @@ def PERFORMDFS(RHG,IPRGS):
         MainStack.push(ip)
         foundPrivileges.append(ip)                             # 发现特权
     while True :
-        if MainStack.isEmpty == False:
+        if MainStack.isEmpty() == False:
             cp = MainStack.pop()                               # 在主堆栈上有权限的情况下继续进行搜索
         else:
-            eps = GetWorkFromOtherAgents()                     # 从其他代理人那里得到工作
-            if len(eps) == 0 :                                 #eps为表？
+            #eps = GetWorkFromOtherAgents()                     # 从其他代理人那里得到工作
+            #if len(eps) == 0 :                                 #eps为表？
                 break
-            else:
-                MainStack.push(eps)
-                foundPrivileges.extend(eps)
+            #else:
+            #    MainStack.push(eps)
+             #   foundPrivileges.extend(eps)
                 continue
         hv = RHG.findVertexForPriv(cp)                         # 找到一个顶点
         ches = RHG.findContainingEdges(hv)                     # 找到包含边缘

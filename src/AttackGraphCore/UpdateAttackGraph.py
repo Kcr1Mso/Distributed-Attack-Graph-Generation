@@ -9,6 +9,10 @@ from AttackGraphStructure.AttackGraph import AttackGraph
 from AttackGraphStructure.AttackElementNode import AttackGraphNode
 from AttackTemplateModel.Vulnerability import Vulnerability
 
+class PrivilegeConjunction:
+    def __init__(self, x ='and'):
+        self.Node = x
+
 partialAttackGraph =  AttackGraph()                            # ²¿·Ö¹¥»÷Í¼ ¹¥»÷Í¼Àà
 #¸üÐÂ¹¥»÷Í¼
 def UpdateAttackGraph(SP,REQPS,GPS,TSA):                       #
@@ -53,6 +57,5 @@ def CreateInformationSourceUsageNode(SP,TSA):
     Node.InformationSourceName = SP.Name
     return Node
 
-def PrivilegeConjunction():
-    pass
+
 
