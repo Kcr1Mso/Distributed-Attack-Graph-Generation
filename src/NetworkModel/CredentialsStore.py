@@ -12,7 +12,7 @@ class CredentialStore(InformationSource):
     '''
 
 
-    def __init__(self, name, ReferencedSoftware, Preconditions, Postconditions, params):
+    def __init__(self, name, ReferencedSoftware, Preconditions, Postconditions):
         '''
         Constructor
         '''

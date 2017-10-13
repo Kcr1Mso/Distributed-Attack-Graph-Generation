@@ -19,11 +19,3 @@ class NetworkHost(object):
     SoftwareApplication
     a list of installed software application on the network host
     '''
-
-
-    def __init__(self):
-        '''
-        Constructor
-        '''
-        pass
-    

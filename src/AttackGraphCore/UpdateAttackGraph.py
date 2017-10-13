@@ -8,8 +8,6 @@ Created on 2017年9月26日
 from AttackGraphStructure.AttackGraph import AttackGraph
 from AttackGraphStructure.AttackElementNode import AttackGraphNode
 from AttackTemplateModel.Vulnerability import Vulnerability
-from NetworkModel.SoftwareApplication import SoftwareApplication
-from NetworkModel.InformationSource import InformationSource
 
 partialAttackGraph =  AttackGraph()                            # 部分攻击图 攻击图类
 #更新攻击图
@@ -36,7 +34,7 @@ def UpdateAttackGraph(SP,REQPS,GPS,TSA):                       #
 
 
 #创建漏洞节点
-def CreateVunlnerabilityExploitNode(SP = Vulnerability(),TSA = SoftwareApplication()):
+def CreateVunlnerabilityExploitNode(SP,TSA):
     Node = AttackGraphNode()
     Node.Type = 'VulnerabilityExploit'
     Node.CPE_ID = TSA.CPE_ID
@@ -46,7 +44,7 @@ def CreateVunlnerabilityExploitNode(SP = Vulnerability(),TSA = SoftwareApplicati
     return Node
 
 #创建信息源使用节点
-def CreateInformationSourceUsageNode(SP = InformationSource(),TSA = SoftwareApplication()):
+def CreateInformationSourceUsageNode(SP,TSA):
     Node = AttackGraphNode()
     Node.Type = 'InformationSource'
     Node.CPE_ID = TSA.CPE_ID

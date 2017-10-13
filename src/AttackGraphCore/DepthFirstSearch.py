@@ -10,9 +10,8 @@ from AttackGraphCore.CheckExploitability import CheckExploitability
 from AttackGraphCore.UpdateAttackGraph import UpdateAttackGraph
 
 from _overlapped import NULL
-from NetworkModel.HyperGraph import HyperGraph
 
-RHG=HyperGraph()
+
 
 
 def PERFORMDFS(RHG,IPRGS):
@@ -94,3 +93,4 @@ def FindTargetSoftwareApps(he):
 
 def ReadAndUpdateSharedMemory():
     pass
+
