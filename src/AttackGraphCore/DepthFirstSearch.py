@@ -5,7 +5,7 @@ Created on 2017年9月26日
 @author: RHy0ThoM
 '''
 from AttackGraphCore.FindGainedPrivileges import FindGainedPrivileges
-from AttackGraphCore.CheckExploitability import CheckExploitability
+from AttackGraphCore.CheckExploitability import CheckExploitability,foundPrivileges
 from AttackGraphCore.UpdateAttackGraph import UpdateAttackGraph
 
 from _overlapped import NULL
@@ -70,10 +70,14 @@ def PERFORMDFS(RHG,IPRGS):
         #ips = PrivilegeStatus()                                #特权状态类？   应该是个网络主机
         #ips.setExpanded(True)                                  # 设置展开
         #SharedMemory.update({ip:ips})                          # 写入共享内存
+        print('initial privilege ipaddress')
         print(ip.IPAddress)
+        print('---------------------------')
         MainStack.push(ip)
         foundPrivileges.append(ip)                             # 发现特权
+        print('foundprivilegs')
         print(foundPrivileges[0].Category)
+        print('---------------------------')
     while True :
         if MainStack.isEmpty() == False:
             cp = MainStack.pop()                               # 在主堆栈上有权限的情况下继续进行搜索
@@ -86,13 +90,15 @@ def PERFORMDFS(RHG,IPRGS):
             #    foundPrivileges.extend(eps)
             #    continue
         hv = RHG.findVertexForPriv(cp)                         # 找到一个顶点
-        print(hv.NetworkInterfaces[1].IPAddress)
+        print('findvertexforpriv')
+        print(hv.NetworkInterfaces[0].IPAddress)
+        print('---------------------------')
         ches = RHG.findContainingEdges(hv)                     # 找到包含边缘
-        print(ches)
+        print(ches[0][1].NetworkInterfaces[0].IPAddress)#ches [[organization,dmz]]
         gprgs = []                                             # List类？ 单纯的表？
         for he in ches :
             tsas = FindTargetSoftwareApps(he)                  # 查找目标软件应用程序
-            print(tsas)
+            print(tsas[0].CPEId)
             for tsa in tsas :
                 '''
                 for v in tsa.vulnerabilities():                # tsa的漏洞
@@ -104,6 +110,7 @@ def PERFORMDFS(RHG,IPRGS):
                         '''
                 for tis in tsa.InformationSource:                  # 信息来源
                     reqprgs = CheckExploitability(tis,cp,tsa)  # 检查利用
+                    print(reqprgs)
                     if reqprgs != NULL:                        # 信息源可以被攻击者使用
                         isgps = FindGainedPrivileges(tis,cp,tsa)
                         gprgs.extend(isgps)
@@ -111,7 +118,7 @@ def PERFORMDFS(RHG,IPRGS):
         for gp in gprgs :
             newgps = PrivilegeStatus()
             newgps.setExpanded(True)
-            oldgps = SharedMemory.get(gp)      # 读和更新共享内存
+            oldgps = SharedMemory.get(gp)      # 读和更新共享内存 
             SharedMemory.update({gp:newgps})
             # 读取和更新共享内存是一种原子操作，可更新其输入权限的状态并返回其旧状态
             if oldgps.expanded == False :
@@ -133,9 +140,11 @@ class PrivilegeStatus:
         self.expanded = x
 
 #查找目标软件应用程序
-def FindTargetSoftwareApps(he):
+def FindTargetSoftwareApps(he):#he [organization,dmz]
     softwareApps = []
     for i in he:
+        print(i.SoftwareApplications[0].CPEId)
+        print('------------------------------')
         softwareApps.extend(i.SoftwareApplications)
     return softwareApps
 

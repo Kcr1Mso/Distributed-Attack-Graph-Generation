@@ -55,7 +55,7 @@ if __name__ == '__main__':
     InitialPrivilege=Privilege('88.132.3.24',
                                'cpe:/o:microsoft:windows_xp::sp2',
                                'Host 1 Windows XP',
-                               'FileAccess'       
+                               'user'       
         )
     
     
@@ -74,16 +74,21 @@ if __name__ == '__main__':
     TargetNetwork.Node=[Organization,DMZ,ALAN,LAN1,LAN2]
     TargetNetwork.Edge=[[Organization,DMZ]]
     
-    Organization.NetworkInterfaces.append(NetworkInterface('88.132.3.22',
-                                                          CommunicationLink_1,
-                                                          Organization
-        ))
+    NetworkInterface_o=NetworkInterface('88.132.3.22',
+                                        CommunicationLink_1,
+                                        Organization)
+    NetworkInterface_d=NetworkInterface('88.132.3.24',
+                                        [CommunicationLink_2,CommunicationLink_3,CommunicationLink_4],
+                                        DMZ
+                                        )
     
-    DMZ.NetworkInterfaces.append(NetworkInterface('88.132.3.24',
-                                                 [CommunicationLink_2,CommunicationLink_3,CommunicationLink_4],
-                                                 DMZ
-                                                 ))
+    Organization.NetworkInterfaces=[NetworkInterface_o]
     
+    DMZ.NetworkInterfaces=[NetworkInterface_d]
+    
+    
+    print(DMZ.NetworkInterfaces[0].IPAddress)
+    print('------------------')
     InternetExplorer=SoftwareApplication('cpe:/a:microsoft:internet_explorer:10',
                                          '88.132.3.24',
                                          34,
@@ -98,7 +103,7 @@ if __name__ == '__main__':
                                            [],
                                            )
     
-    DMZ.SoftwareApplications.append(SoftwareApplication('cpe:/o:mircosoft:windows_xp::sp2',
+    DMZ.SoftwareApplications.append(SoftwareApplication('cpe:/o:mircosoft:windows_7::sp2',
                                                        '88.132.3.24',
                                                        80,
                                                        [InternetExplorer,MozillaThunderbird],

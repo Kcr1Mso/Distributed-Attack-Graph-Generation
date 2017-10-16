@@ -13,8 +13,8 @@ class HyperGraph:
         self.Edge = y
     def findVertexForPriv(self , x):
         for i in self.Node:
-            if i.NetworkInterfaces[1].IPAddress == x.IPAddress:
-                print(i.NetworkInterfaces[1].IPAddress)
+            if i.NetworkInterfaces[0].IPAddress == x.IPAddress:
+                print(i.NetworkInterfaces[0].IPAddress)
                 return i
         else:
             return NULL
