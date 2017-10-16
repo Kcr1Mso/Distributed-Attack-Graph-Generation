@@ -9,12 +9,12 @@ class NetworkHost(object):
     '''
     classdocs
     '''
-    NetworkInterface=[]
+    NetworkInterfaces = []
     '''
     NetworkInterface
     a list of network interface contained by the network host
     '''
-    SoftwareApplication=[]    
+    SoftwareApplications = []    
     '''
     SoftwareApplication
     a list of installed software application on the network host

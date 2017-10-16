@@ -5,7 +5,7 @@ Created on 2017Äê9ÔÂ26ÈÕ
 @author: RHy0ThoM
 '''
 
-from AttackTempleModel.Condition import Condition
+from AttackTemplateModel.Condition import Condition
 
 class InDirectCondition(Condition):
     '''

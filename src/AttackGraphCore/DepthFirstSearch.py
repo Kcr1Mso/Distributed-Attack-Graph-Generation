@@ -67,11 +67,13 @@ def PERFORMDFS(RHG,IPRGS):
     foundPrivileges =  []
     
     for ip in IPRGS :
-        ips = PrivilegeStatus()                                #特权状态类？   应该是个网络主机
-        ips.setExpanded(True)                                  # 设置展开
-        SharedMemory.update({ip:ips})                          # 写入共享内存
+        #ips = PrivilegeStatus()                                #特权状态类？   应该是个网络主机
+        #ips.setExpanded(True)                                  # 设置展开
+        #SharedMemory.update({ip:ips})                          # 写入共享内存
+        print(ip.IPAddress)
         MainStack.push(ip)
         foundPrivileges.append(ip)                             # 发现特权
+        print(foundPrivileges[0].Category)
     while True :
         if MainStack.isEmpty() == False:
             cp = MainStack.pop()                               # 在主堆栈上有权限的情况下继续进行搜索
@@ -81,21 +83,26 @@ def PERFORMDFS(RHG,IPRGS):
                 break
             #else:
             #    MainStack.push(eps)
-             #   foundPrivileges.extend(eps)
-                continue
+            #    foundPrivileges.extend(eps)
+            #    continue
         hv = RHG.findVertexForPriv(cp)                         # 找到一个顶点
+        print(hv.NetworkInterfaces[1].IPAddress)
         ches = RHG.findContainingEdges(hv)                     # 找到包含边缘
+        print(ches)
         gprgs = []                                             # List类？ 单纯的表？
         for he in ches :
             tsas = FindTargetSoftwareApps(he)                  # 查找目标软件应用程序
+            print(tsas)
             for tsa in tsas :
+                '''
                 for v in tsa.vulnerabilities():                # tsa的漏洞
                     reqprgs = CheckExploitability(v,cp,tsa)    # 检查利用
                     if reqprgs != NULL :                       # 漏洞可以被攻击者利用
                         vgps = FindGainedPrivileges(v,cp,tsa)  # 寻找获得特权
                         gprgs.extend(vgps)
                         UpdateAttackGraph(v,reqprgs,vgps,tsa)
-                for tis in tsa.infoSources():                  # 信息来源
+                        '''
+                for tis in tsa.InformationSource:                  # 信息来源
                     reqprgs = CheckExploitability(tis,cp,tsa)  # 检查利用
                     if reqprgs != NULL:                        # 信息源可以被攻击者使用
                         isgps = FindGainedPrivileges(tis,cp,tsa)

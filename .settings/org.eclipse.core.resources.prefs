@@ -1,6 +1,7 @@
 eclipse.preferences.version=1
 encoding//src/AttackGraphCore/CheckExploitability.py=gbk
 encoding//src/AttackGraphCore/DepthFirstSearch.py=gbk
+encoding//src/AttackGraphCore/DynamicDistributedMemoryManager.py=gbk
 encoding//src/AttackGraphCore/FindGainedPrivileges.py=gbk
 encoding//src/AttackGraphCore/Main.py=gbk
 encoding//src/AttackGraphCore/MergrPartialAttackGraphs.py=gbk

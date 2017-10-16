@@ -1,0 +1,14 @@
+# coding=gbk
+'''
+Created on 2017Äê10ÔÂ16ÈÕ
+
+@author: RHy0ThoM
+'''
+
+import random,time,queue
+from multiprocessing.managers import BaseManager 
+
+task_queue=queue.Queue()
+
+result_queue=queue.Queue()
+
