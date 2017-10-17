@@ -16,7 +16,7 @@ class AttackGraph:
     def addNode(self,node):
         self.Node.append(node)
     def addEdge(self,nodeA,nodeB):
-        self.Edge.append(AttackGraphEdge(nodeA,nodeB))
+        self.Edge.append([nodeA,nodeB])
     def removeNode(self,node):
         self.Node.remove(node)
     def privileges(self):

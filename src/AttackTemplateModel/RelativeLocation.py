@@ -11,12 +11,9 @@ class RelativeLocation(Enum):
     '''
     classdocs
     '''
-    RelativeLocation=Enum('RelativeLocation',
-                          (
-                          'AttackerApplication',
-                          'VictimApplication',
-                          'BackendApplication', 
-                          'IntermediateApplication')
-                          )
+    AttackerApplication=0
+    VictimApplication=1
+    BackendApplication=2
+    IntermediateApplication=3
 
         

@@ -21,21 +21,28 @@ def UpdateAttackGraph(SP,REQPS,GPS,TSA):                       #
 # REQPS是必需的权限
 # GPS是获得的特权
 # TSA是目标软件应用
+    print(isinstance(SP , Vulnerability))
     if  isinstance(SP , Vulnerability):                        #漏洞   如何表示存在于？
         exp = CreateVunlnerabilityExploitNode(SP,TSA)          #创建漏洞利用节点
+        print('----------isinstance---------------')
     else:
+        print('------------informationsoucernode----------------')
         exp = CreateInformationSourceUsageNode(SP,TSA)         #创建信息源使用节点
+    partialAttackGraph.addNode(exp)
     if len(REQPS)>1:
+        print('----------reqps-----------------')
         prjc = PrivilegeConjunction()                          #特权连接  类？
         partialAttackGraph.addNode(prjc)                       #部分攻击图 添加节点
         for reqp in REQPS :
             partialAttackGraph.addEdge(reqp,prjc)              #部分攻击图 添加边
     else:
+        print('----------reqps!!!!-----------------')
         if len(REQPS) == 1:
             partialAttackGraph.addEdge(REQPS[0],exp)
     for gp in GPS :
         partialAttackGraph.addEdge(exp,gp)
-
+    print(partialAttackGraph.Node)
+    print(partialAttackGraph.Edge)
 
 #创建漏洞节点
 def CreateVunlnerabilityExploitNode(SP,TSA):

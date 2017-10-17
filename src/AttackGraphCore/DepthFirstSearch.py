@@ -110,9 +110,14 @@ def PERFORMDFS(RHG,IPRGS):
                         '''
                 for tis in tsa.InformationSource:                  # 信息来源
                     reqprgs = CheckExploitability(tis,cp,tsa)  # 检查利用
+                    print('---------------check------------------')
                     print(reqprgs)
+                    print('--------------------------------------')
                     if reqprgs != NULL:                        # 信息源可以被攻击者使用
                         isgps = FindGainedPrivileges(tis,cp,tsa)
+                        print('------------find---------------')
+                        print(isgps)
+                        print('-------------------------------')
                         #gprgs.extend(isgps)
                         UpdateAttackGraph(tis,reqprgs,isgps,tsa)
         for gp in gprgs :

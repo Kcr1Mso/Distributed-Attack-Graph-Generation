@@ -17,4 +17,4 @@ class Condition(object):
     
     def __init__(self,Category,ExistIn):
         self.Category=Category
-        self.ExistIn=RelativeLocation
+        self.ExistIn=ExistIn
