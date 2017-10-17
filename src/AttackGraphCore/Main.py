@@ -128,7 +128,7 @@ if __name__ == '__main__':
     attackgraph=AttackGraph()
     
     DepthFirstSearch.PERFORMDFS(TargetNetwork, IPRGS)
-#    attackgraph=MergrPartialAttackGraphs()
+#     attackgraph=MergrPartialAttackGraphs()
     print(partialAttackGraph.Node[0].CPE_ID)
     print(partialAttackGraph.Node[0].Type)
     print(partialAttackGraph.Node[0].InformationSourceName)
