@@ -1,5 +1,5 @@
 # coding=gbk
-'''
+''' 
 Created on 2017年9月26日
 
 @author: RHy0ThoM
@@ -16,7 +16,7 @@ class SoftwareApplication(object):
     '''
     CPEId denotes the software product identifier。
     '''
-    HostIPAdDress=''     #string
+    HostIPAddress=''     #string
     '''
     HostIPAddress denotes the IP address on which the software application is serving
     '''

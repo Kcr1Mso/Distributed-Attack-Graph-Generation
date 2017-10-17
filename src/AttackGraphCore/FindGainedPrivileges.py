@@ -18,22 +18,29 @@ def FindGainedPrivileges(SP,CP,TSA):
     
     gprgs = []
 
-    for psc in SP.postConditions:                             #后置条件
-        if psc.Existsln == "BackendApplication":              #存在于
+    for psc in SP.Postconditions:                             #后置条件
+        if psc.ExistIn == "BackendApplication":              #存在于
             for bsa in TSA.backendSoftwareApps:               #后端软件应用程序
-                gprgs.extend(FormPrivileges(psc,CP.softwareApp,bsa))
+                gprgs.extend(FormPrivileges(psc,CP.ApplicationName,bsa))
                 #  gprgs添加所有   表格特权 (psc,CP的软件应用,bsa)
         else:
-            gprgs = FormPrivileges(psc,CP.softwareApp,TSA)
+            gprgs = FormPrivileges(psc,CP.ApplicationName,TSA)
     return gprgs                                              #gprgs 是一个表
 
 
-def FormPrivileges(psc,softwareApp,TSA):
-    for i in TSA.infoSources:
-        if psc in i.preConditions:
-            if softwareApp in i.ReferencedSoftware:
-                return i.postConditions
+def FormPrivileges(PreConditions, SoftwareApp, TSA):
+    print('----------------------------------')
+    print(PreConditions)
+    print(SoftwareApp)
+    for i in TSA.InformationSource:
+        print(i.Preconditions)
+        print(i.name)
+        if PreConditions == i.Preconditions:
+            if SoftwareApp == i.name:
+                return i.Postconditions
+    '''
     for i in TSA.vulnerabilities:
-        if psc in i.preConditions:
-            if softwareApp in i.ReferencedSoftware:
-                return i.postConditions
+        if PreConditions in i.Preconditions:
+            if SoftwareApp == i.name:
+                return i.Postconditions
+'''

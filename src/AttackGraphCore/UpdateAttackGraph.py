@@ -1,4 +1,4 @@
-# coding=gbk
+ # coding=gbk
 '''
 Created on 2017年9月26日
 
@@ -32,7 +32,7 @@ def UpdateAttackGraph(SP,REQPS,GPS,TSA):                       #
             partialAttackGraph.addEdge(reqp,prjc)              #部分攻击图 添加边
     else:
         if len(REQPS) == 1:
-            partialAttackGraph.addEdge(REQPS(0),exp)
+            partialAttackGraph.addEdge(REQPS[0],exp)
     for gp in GPS :
         partialAttackGraph.addEdge(exp,gp)
 
@@ -41,20 +41,20 @@ def UpdateAttackGraph(SP,REQPS,GPS,TSA):                       #
 def CreateVunlnerabilityExploitNode(SP,TSA):
     Node = AttackGraphNode()
     Node.Type = 'VulnerabilityExploit'
-    Node.CPE_ID = TSA.CPE_ID
-    Node.CVE_ID = SP.CVE_ID
-    Node.IPAddress = TSA.HostIP
-    Node.ApplicationName = TSA.Name
+    Node.CPE_ID = TSA.CPEId
+    Node.CVE_ID = SP.CVEId
+    Node.IPAddress = TSA.HostIPAddress
+    Node.ApplicationName = TSA.name
     return Node
 
 #创建信息源使用节点
 def CreateInformationSourceUsageNode(SP,TSA):
     Node = AttackGraphNode()
     Node.Type = 'InformationSource'
-    Node.CPE_ID = TSA.CPE_ID
-    Node.IPAddress = TSA.HostIP
-    Node.ApplicationName = TSA.Name
-    Node.InformationSourceName = SP.Name
+    Node.CPE_ID = TSA.CPEId
+    Node.IPAddress = TSA.HostIPAddress
+#Node.ApplicationName = TSA.name
+    Node.InformationSourceName = SP.name
     return Node
 
 

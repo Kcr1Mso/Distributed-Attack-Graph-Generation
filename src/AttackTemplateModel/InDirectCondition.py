@@ -1,3 +1,4 @@
+
 # coding=gbk
 '''
 Created on 2017Äê9ÔÂ26ÈÕ
@@ -13,10 +14,10 @@ class InDirectCondition(Condition):
     '''
     ProductType=''      #enum
 
-    def __init__(self, Category, RelativeLocation, ProductType):
+    def __init__(self, Category, ExistIn, ProductType):
         '''
         Constructor
         '''
-        Condition.__init__(self,Category,RelativeLocation)
+        Condition.__init__(self,Category,ExistIn)
         self.ProductType=ProductType
         

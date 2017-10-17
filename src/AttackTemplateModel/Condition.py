@@ -6,15 +6,15 @@ Created on 2017Äê9ÔÂ26ÈÕ
 '''
 
 from AttackGraphStructure.Category import Category
-from AttackTempleModel.RelativeLocation import RelativeLocation
+from AttackTemplateModel.RelativeLocation import RelativeLocation
 
 class Condition(object):
     '''
     classdocs
     '''
-    Category=''     #enum
-    RelativeLocation=''     #enum
+    Category=Category     #enum
+    ExistIn=RelativeLocation     #enum
     
-    def __init__(self,Category,RelativeLocation):
+    def __init__(self,Category,ExistIn):
         self.Category=Category
-        self.RelativeLocation=RelativeLocation
+        self.ExistIn=RelativeLocation

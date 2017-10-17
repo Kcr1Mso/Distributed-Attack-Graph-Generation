@@ -5,7 +5,7 @@ Created on 2017Äê9ÔÂ26ÈÕ
 @author: RHy0ThoM
 '''
 
-from asyncio.locks import Condition
+from AttackTemplateModel.Condition import Condition
 
 class DirectCondition(Condition):
     '''
@@ -13,9 +13,9 @@ class DirectCondition(Condition):
     '''
     CPEId=''        #string
 
-    def __init__(self, Category, RelativeLocation, CPEId):
+    def __init__(self, Category, ExistIn, CPEId):
         '''
         Constructor
         '''
-        Condition.__init__(self,Category,RelativeLocation)
+        Condition.__init__(self,Category,ExistIn)
         self.CPEId=CPEId

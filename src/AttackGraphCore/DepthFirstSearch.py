@@ -113,7 +113,7 @@ def PERFORMDFS(RHG,IPRGS):
                     print(reqprgs)
                     if reqprgs != NULL:                        # 信息源可以被攻击者使用
                         isgps = FindGainedPrivileges(tis,cp,tsa)
-                        gprgs.extend(isgps)
+                        #gprgs.extend(isgps)
                         UpdateAttackGraph(tis,reqprgs,isgps,tsa)
         for gp in gprgs :
             newgps = PrivilegeStatus()
