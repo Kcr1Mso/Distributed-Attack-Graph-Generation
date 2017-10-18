@@ -5,7 +5,7 @@ Created on 2017Äê9ÔÂ26ÈÕ
 @author: RHy0ThoM
 '''
 from AttackGraphCore.FindGainedPrivileges import FindGainedPrivileges
-from AttackGraphCore.CheckExploitability import CheckExploitability,foundPrivileges
+from AttackGraphCore.CheckExploitability import CheckExploitability
 from AttackGraphCore.UpdateAttackGraph import UpdateAttackGraph
 
 from _overlapped import NULL

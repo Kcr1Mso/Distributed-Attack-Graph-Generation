@@ -21,3 +21,8 @@ class InDirectCondition(Condition):
         Condition.__init__(self,Category,ExistIn)
         self.ProductType=ProductType
         
+        '''
+        The product types are defined in the system.A product type can be mail server,mail client,web server,web client,
+        ftp client,database server application,etc.
+        '''
+        

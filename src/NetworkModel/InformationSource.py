@@ -14,6 +14,7 @@ class InformationSource(object):
     <ReferencedSoftware;Preconditions; Postconditions>
     '''
     name=''     #string
+    
     ReferencedSoftware=[]       #list
     '''
     The postconditions are gained on the software applications referenced by the information source that are stored by 
