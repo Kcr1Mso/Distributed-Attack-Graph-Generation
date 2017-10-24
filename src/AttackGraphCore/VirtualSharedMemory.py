@@ -5,7 +5,35 @@ Created on 2017Äê10ÔÂ16ÈÕ
 @author: RHy0ThoM
 '''
 
-import mmap
+import queue
+from multiprocessing.managers import BaseManager
+
+task_queue=queue.Queue()
+result_queue=queue.Queue()
+
+def QueueManager(BaseManager):
+    pass
+
+QueueManager.register('get_task_queue',callable=lambda:task_queue)
+QueueManager.register('get_result_queue',callable=lambda:result_queue)
 
 
 
+manager=QueueManager(address=('',5000),authkey=b'abc')
+
+manager.start()
+
+task=manager.get_task_queue()
+result=manager.get_result_queue()
+
+def WriteToSharedMemory(ip,ips):
+    pass
+
+def GetWorkFromOtherAgents():
+    pass
+
+def ReadAndUpdateSharedMemory():
+    pass
+
+def ReadFromSharedMemory(rqp):
+    pass 

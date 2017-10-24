@@ -11,7 +11,7 @@ from NetworkModel.NetworkInterface import CommunicationLink
 from NetworkModel.SoftwareApplication import SoftwareApplication
 from NetworkModel.HyperGraph import HyperGraph
 from AttackGraphStructure.AttackGraph import AttackGraph
-from AttackGraphCore.MergrPartialAttackGraphs import MergrPartialAttackGraphs
+#from AttackGraphCore.MergrPartialAttackGraphs import MergrPartialAttackGraphs
 from AttackGraphCore.UpdateAttackGraph import partialAttackGraph
 from NetworkModel.InformationSource import InformationSource
 from AttackTemplateModel.Vulnerability import Vulnerability
@@ -128,7 +128,7 @@ if __name__ == '__main__':
     attackgraph=AttackGraph()
     
     DepthFirstSearch.PERFORMDFS(TargetNetwork, IPRGS)
-#     attackgraph=MergrPartialAttackGraphs()
+#   attackgraph=MergrPartialAttackGraphs()
     print(partialAttackGraph.Node[0].CPE_ID)
     print(partialAttackGraph.Node[0].Type)
-    print(partialAttackGraph.Node[0].InformationSourceName)
+    print(partialAttackGraph.Node[0].HostIPAddress)

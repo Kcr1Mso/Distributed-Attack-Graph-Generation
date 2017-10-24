@@ -44,7 +44,6 @@ def UpdateAttackGraph(SP,REQPS,GPS,TSA):                       #
     print(partialAttackGraph.Node)
     print(partialAttackGraph.Edge)
 
-#创建漏洞节点
 def CreateVunlnerabilityExploitNode(SP,TSA):
     Node = AttackGraphNode()
     Node.Type = 'VulnerabilityExploit'
@@ -54,7 +53,6 @@ def CreateVunlnerabilityExploitNode(SP,TSA):
     Node.ApplicationName = TSA.name
     return Node
 
-#创建信息源使用节点
 def CreateInformationSourceUsageNode(SP,TSA):
     Node = AttackGraphNode()
     Node.Type = 'InformationSource'
