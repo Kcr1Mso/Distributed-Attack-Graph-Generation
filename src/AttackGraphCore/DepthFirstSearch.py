@@ -9,6 +9,7 @@ from AttackGraphCore.CheckExploitability import CheckExploitability
 from AttackGraphCore.UpdateAttackGraph import UpdateAttackGraph
 
 from _overlapped import NULL
+from AttackTemplateModel.Vulnerability import Vulnerability
 
 #栈操作出错
 class StackException(Exception):                  #栈操作出错
@@ -100,14 +101,17 @@ def PERFORMDFS(RHG,IPRGS):
             tsas = FindTargetSoftwareApps(he)                  # 查找目标软件应用程序
             print(tsas[0].CPEId)
             for tsa in tsas :
-                '''
-                for v in tsa.vulnerabilities():                # tsa的漏洞
+                print(tsa.Vulnerabilities)
+                print('---------------Vulnerability---------------')               
+                for v in tsa.Vulnerabilities:                # tsa的漏洞
+                    print(v)
+                    print('-----------------tas.v------------------')
                     reqprgs = CheckExploitability(v,cp,tsa)    # 检查利用
                     if reqprgs != NULL :                       # 漏洞可以被攻击者利用
                         vgps = FindGainedPrivileges(v,cp,tsa)  # 寻找获得特权
                         gprgs.extend(vgps)
                         UpdateAttackGraph(v,reqprgs,vgps,tsa)
-                        '''
+    
                 for tis in tsa.InformationSource:                  # 信息来源
                     reqprgs = CheckExploitability(tis,cp,tsa)  # 检查利用
                     print('---------------check------------------')

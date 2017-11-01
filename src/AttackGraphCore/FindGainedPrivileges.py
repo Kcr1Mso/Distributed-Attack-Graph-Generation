@@ -50,9 +50,10 @@ def FormPrivileges(PreConditions, SoftwareApp, TSA):
                 return i.Postconditions
     else:
         return []
-    '''
     for i in TSA.vulnerabilities:
+        print('-------------FGP----TSA.Vul-----------------')
+        print(i.CVEId)
+        print('-------------------------------------')
         if PreConditions in i.Preconditions:
             if SoftwareApp == i.name:
                 return i.Postconditions
-'''

@@ -1,0 +1,18 @@
+# coding=gbk
+'''
+Created on 2017Äê10ÔÂ25ÈÕ
+
+@author: RHy0ThoM
+'''
+
+class Job(object):
+    '''
+    classdocs
+    '''
+
+
+    def __init__(self, JobId):
+        '''
+        Constructor
+        '''
+        self.JobId=JobId

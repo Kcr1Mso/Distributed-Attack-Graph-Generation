@@ -47,18 +47,18 @@ def UpdateAttackGraph(SP,REQPS,GPS,TSA):                       #
 def CreateVunlnerabilityExploitNode(SP,TSA):
     Node = AttackGraphNode()
     Node.Type = 'VulnerabilityExploit'
-    Node.CPE_ID = TSA.CPEId
-    Node.CVE_ID = SP.CVEId
-    Node.IPAddress = TSA.HostIPAddress
-    Node.ApplicationName = TSA.name
+    Node.CPEId = TSA.CPEId
+    Node.CVEId = SP.CVEId
+    Node.HostIPAddress = TSA.HostIPAddress
+    #Node.ApplicationName = TSA.name
     return Node
 
 def CreateInformationSourceUsageNode(SP,TSA):
     Node = AttackGraphNode()
     Node.Type = 'InformationSource'
-    Node.CPE_ID = TSA.CPEId
-    Node.IPAddress = TSA.HostIPAddress
-#Node.ApplicationName = TSA.name
+    Node.CPEId = TSA.CPEId
+    Node.HostIPAddress = TSA.HostIPAddress
+    #Node.ApplicationName = TSA.name
     Node.InformationSourceName = SP.name
     return Node
 

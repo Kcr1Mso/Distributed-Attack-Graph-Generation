@@ -5,19 +5,21 @@ Created on 2017Äê10ÔÂ13ÈÕ
 @author: RHy0ThoM
 '''
 from AttackGraphCore import DepthFirstSearch
+from AttackGraphCore.UpdateAttackGraph import partialAttackGraph
+#from AttackGraphCore.MergrPartialAttackGraphs import MergrPartialAttackGraphs
 from NetworkModel.NetworkHost import NetworkHost
 from NetworkModel.NetworkInterface import NetworkInterface
 from NetworkModel.NetworkInterface import CommunicationLink
 from NetworkModel.SoftwareApplication import SoftwareApplication
 from NetworkModel.HyperGraph import HyperGraph
-from AttackGraphStructure.AttackGraph import AttackGraph
-#from AttackGraphCore.MergrPartialAttackGraphs import MergrPartialAttackGraphs
-from AttackGraphCore.UpdateAttackGraph import partialAttackGraph
 from NetworkModel.InformationSource import InformationSource
-from AttackTemplateModel.Vulnerability import Vulnerability
+from AttackGraphStructure.AttackGraph import AttackGraph
 from AttackGraphStructure.Privilege import Privilege
 from AttackTemplateModel.DirectCondition import DirectCondition
-from AttackTemplateModel.InDirectCondition import InDirectCondition
+#from AttackTemplateModel.InDirectCondition import InDirectCondition
+from AttackTemplateModel.Vulnerability import Vulnerability
+#from graphviz import Digraph
+
 
 if __name__ == '__main__':
 
@@ -28,29 +30,56 @@ if __name__ == '__main__':
     LAN2=NetworkHost()
 
     CommunicationLink_1=CommunicationLink(Organization,DMZ)
-
     CommunicationLink_2=CommunicationLink(DMZ,ALAN)
     CommunicationLink_3=CommunicationLink(DMZ,LAN1)
     CommunicationLink_4=CommunicationLink(DMZ,LAN2)
-    
     CommunicationLink_5=CommunicationLink(ALAN,LAN1)
     CommunicationLink_6=CommunicationLink(ALAN,LAN2)
-    
     CommunicationLink_7=CommunicationLink(LAN1,LAN2)
         
     precondition_win7=DirectCondition('user',
                                       'VictimApplication',
                                       'cpe:/o:microsoft:windows_7::sp2'
                                       )
-    postcondition_win7=InDirectCondition('root',
+    postcondition_win7=DirectCondition('FileAccess',
                                          'AttackApplication',
-                                         'WebClient'
+                                         'cpe:/o:microsoft:windows_7::sp2'
                                          )
     
-    Vulnerability_win7=Vulnerability('CVE-2012-4076',
+    Vulnerability_win7=Vulnerability('CVE-2012-4576',
                                      [precondition_win7],
                                      [postcondition_win7]
                                      )
+    
+    precondition_IE=DirectCondition('user',
+                                    'VictimApplication',
+                                    'cpe:/a:microsoft:internet_explorer:10'
+                                    )
+    postcondition_IE_1=DirectCondition('FileAccess',
+                                       'IntermediateApplication',
+                                       'cpe:/a:microsoft:internet_explorer:10'
+                                       )
+    postcondition_IE_2=DirectCondition('MemoryAccess',
+                                       'IntermediateApplication',
+                                       'cpe:/a:microsoft:internet_explorer:10'
+                                       )
+    Vulnerability_IE=Vulnerability('CVE-2010-3004',
+                                   [precondition_IE],
+                                   [postcondition_IE_1,postcondition_IE_2]
+                                   )
+    
+    precondition_MT=('user',
+                     'VictimApplication',
+                     'cpe:/a:mozilla:thunderbird:17.0.2'
+                     )
+    postcondition_MT=('FileAccess',
+                      'IntermediateApplication',
+                      'cpe:/a:mozilla:thunderbird:17.0.2'
+                      )
+    Vulnerability_MT=Vulnerability('CVE-2011-3544',
+                                   [precondition_MT],
+                                   [postcondition_MT]
+                                   )
     
     Privilege_win7=Privilege('88.132.3.24',
                             'cpe:/o:microsoft:windows_7::sp2',
@@ -64,24 +93,63 @@ if __name__ == '__main__':
                                    'root'
                                    )
     
+    
+    Privilege_IE=Privilege('75.62.2.22',
+                           'cpe:/a:microsoft:internet_explorer:10',
+                           'Host 2 Internet Explorer',
+                           'FileAccess'
+                           )
+    AccessPrivilege_IE_1=Privilege('75.62.2.22',
+                                   'cpe:/a:microsoft:internet_explorer:10',
+                                   'Host 2 Internet Explorer',
+                                   'FileAccess'
+                                   )
+    AccessPrivilege_IE_2=Privilege('75.62.2.22',
+                                   'cpe:/a:microsoft:internet_explorer:10',
+                                   'Host 2 Internet Explorer',
+                                   'MemoryAccess')
+    
+    
+    Privilege_MT=Privilege('75.62.2.22',
+                           'cpe:/a:mozilla:thunderbird:17.0.2',
+                           'Host 2 Mozilla Thunderbird',
+                           'FileAccess'
+                           )
     InitialPrivilege=Privilege('88.132.3.24',
                                'cpe:/o:microsoft:windows_7::sp2',
                                'Host 1 Windows 7',
-                               'user'       
+                               'FileAccess '       
         )
+    
+    InformationSource_aws=InformationSource('ApacheWebServer',
+                                            [],
+                                            [],
+                                            [],
+                                            )
+    
+    ApacheWebServer=SoftwareApplication('cpe:/a:apache:http_server:2.2.4',
+                                        '75.62.3.33',
+                                        76,
+                                        [],
+                                        [InformationSource_aws],
+                                        [],
+                                        )
 
     InternetExplorer=SoftwareApplication('cpe:/a:microsoft:internet_explorer:10',
-                                         '88.132.3.24',
+                                         '75.62.2.22',
                                          34,
+                                         [ApacheWebServer],
                                          [],
-                                         [],
+                                         [Vulnerability_IE],
                                          )
     
+
     MozillaThunderbird=SoftwareApplication('cpe:/a:mozilla:thunderbird:17.0.2',
-                                           '88.132.3.24',
+                                           '75.62.2.22',
                                            48,
                                            [],
                                            [],
+                                           [Vulnerability_MT],
                                            )
     
     InformationSource_win7=InformationSource('Host 1 Windows 7',
@@ -95,40 +163,75 @@ if __name__ == '__main__':
     TargetNetwork=HyperGraph()
     
     TargetNetwork.Node=[Organization,DMZ,ALAN,LAN1,LAN2]
-    TargetNetwork.Edge=[[Organization,DMZ]]
-    
-    NetworkInterface_o=NetworkInterface('88.132.3.22',
+    TargetNetwork.Edge=[[Organization,DMZ],[DMZ,ALAN],[DMZ,LAN1],[DMZ,LAN2],[ALAN,LAN1],[ALAN,LAN2],[LAN1,LAN2]]
+
+
+    NetworkInterface_o=NetworkInterface('88.132.3.24',
                                         CommunicationLink_1,
                                         Organization)
-    NetworkInterface_d=NetworkInterface('88.132.3.24',
+
+    NetworkInterface_d=NetworkInterface('75.62.2.22',
                                         [CommunicationLink_2,CommunicationLink_3,CommunicationLink_4],
                                         DMZ
                                         )
     
+    NetworkInterface_a=NetworkInterface('75.62.3.35',
+                                        [CommunicationLink_5,CommunicationLink_6],
+                                        ALAN
+                                        )
+    NetworkInterface_1=NetworkInterface('75.62.3.33',
+                                        [CommunicationLink_7],
+                                        LAN1
+                                        )
+    
+    
     Organization.NetworkInterfaces=[NetworkInterface_o]
+    Organization.SoftwareApplications.append(SoftwareApplication('cpe:/o:mircosoft:windows_7::sp2',
+                                                                 '88.132.3.24',
+                                                                 54,
+                                                                 [],
+                                                                 [],
+                                                                 [Vulnerability_win7],
+                                                                 ))
     
     DMZ.NetworkInterfaces=[NetworkInterface_d]
-    
-    
-    print(DMZ.NetworkInterfaces[0].IPAddress)
-    print('------------------')
-
-    
     DMZ.SoftwareApplications.append(SoftwareApplication('cpe:/o:mircosoft:windows_7::sp2',
-                                                       '88.132.3.24',
+                                                       '75.62.2.22',
                                                        80,
                                                        [InternetExplorer,MozillaThunderbird],
                                                        [InformationSource_win7],
+                                                       [Vulnerability_win7],
                                                        ))
     
+    ALAN.NetworkInterfaces=[NetworkInterface_a]
+    ALAN.SoftwareApplications.append(SoftwareApplication('cpe:/o:mircosoft:windows_7::sp2',
+                                                         '75.62.3.35',
+                                                         99,
+                                                         [],
+                                                         [],
+                                                         [],
+                                                         ))
+    
+    LAN1.NetworkInterfaces=[NetworkInterface_1]
     
     
+    print(Organization.NetworkInterfaces[0].IPAddress)
+    print(DMZ.NetworkInterfaces[0].IPAddress)
+    print(LAN1.NetworkInterfaces[0].IPAddress)
+    print('------------------')
     
+    
+        
     IPRGS=[InitialPrivilege]
     attackgraph=AttackGraph()
     
     DepthFirstSearch.PERFORMDFS(TargetNetwork, IPRGS)
-#   attackgraph=MergrPartialAttackGraphs()
-    print(partialAttackGraph.Node[0].CPE_ID)
+    print('------------final answer---------------')
+    print(partialAttackGraph.Node[0].CPEId)
     print(partialAttackGraph.Node[0].Type)
-    print(partialAttackGraph.Node[0].HostIPAddress)
+    print('---------------------------------------')
+    #dot=Digraph(comment='Attack Graph')
+    #dot.node(InitialPrivilege.IPAddress)
+    #dot.node(partialAttackGraph.Node[0].Type)
+    #print(dot.source)
+    #dot.render('test-output/attackgraph.gv',view=True)

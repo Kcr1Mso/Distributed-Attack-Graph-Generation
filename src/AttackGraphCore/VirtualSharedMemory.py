@@ -29,9 +29,6 @@ result=manager.get_result_queue()
 def WriteToSharedMemory(ip,ips):
     pass
 
-def GetWorkFromOtherAgents():
-    pass
-
 def ReadAndUpdateSharedMemory():
     pass
 

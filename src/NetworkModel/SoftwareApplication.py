@@ -4,6 +4,7 @@ Created on 2017Äê9ÔÂ26ÈÕ
 
 @author: RHy0ThoM
 '''
+from AttackTemplateModel.Vulnerability import Vulnerability
 
 class SoftwareApplication(object):
     '''
@@ -33,7 +34,9 @@ class SoftwareApplication(object):
     InformationSources is a list of information sources contained by the software application such as
      credentials store, cookies, DNS table, routing table, databases.
     '''
-    def __init__(self, CPEId, HostIPAddress, Port, BackendApplication, InformationSource):
+    
+    Vulnerabilities=[]
+    def __init__(self, CPEId, HostIPAddress, Port, BackendApplication, InformationSource, Vulnerabilities):
         '''
         Constructor
         '''
@@ -42,4 +45,5 @@ class SoftwareApplication(object):
         self.Port=Port
         self.BackendApplication=BackendApplication
         self.InformationSource=InformationSource
+        self.Vulnerabilities=Vulnerabilities
         
