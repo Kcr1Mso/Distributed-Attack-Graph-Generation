@@ -7,7 +7,6 @@ Created on 2017年9月26日
 from AttackGraphCore.FindGainedPrivileges import FindGainedPrivileges
 from AttackGraphCore.CheckExploitability import CheckExploitability
 from AttackGraphCore.UpdateAttackGraph import UpdateAttackGraph
-
 from _overlapped import NULL
 from AttackTemplateModel.Vulnerability import Vulnerability
 
@@ -64,24 +63,24 @@ def PERFORMDFS(RHG,IPRGS):
     '''
     
     MainStack=CreateMainStack()       #Create Search Main Stack
-    SharedMemory={}
+    SharedMemory=[]
     foundPrivileges =  []
     
     for ip in IPRGS :
         #ips = PrivilegeStatus()                                #特权状态类？   应该是个网络主机
         #ips.setExpanded(True)                                  # 设置展开
         #SharedMemory.update({ip:ips})                          # 写入共享内存
-        print('initial privilege ipaddress')
-        print(ip.IPAddress)
-        print('---------------------------')
         MainStack.push(ip)
         foundPrivileges.append(ip)                             # 发现特权
-        print('foundprivilegs')
+        print('----------------foundprivilegs------------------')
         print(foundPrivileges[0].Category)
-        print('---------------------------')
+        print('------------------------------------------------')
     while True :
         if MainStack.isEmpty() == False:
             cp = MainStack.pop()                               # 在主堆栈上有权限的情况下继续进行搜索
+            print('---------MainStack.pop------------------')
+            print(cp.IPAddress)
+            print('----------------------------------------')
         else:
             #eps = GetWorkFromOtherAgents()                     # 从其他代理人那里得到工作
             #if len(eps) == 0 :                                 #eps为表？
@@ -91,22 +90,30 @@ def PERFORMDFS(RHG,IPRGS):
             #    foundPrivileges.extend(eps)
             #    continue
         hv = RHG.findVertexForPriv(cp)                         # 找到一个顶点
-        print('findvertexforpriv')
+        print('------------------findvertexforpriv-----------------------')
         print(hv.NetworkInterfaces[0].IPAddress)
-        print('---------------------------')
+        print('----------------------------------------------------------')
         ches = RHG.findContainingEdges(hv)                     # 找到包含边缘
+        print('--------------findContainingEdges-------------------------')
         print(ches[0][1].NetworkInterfaces[0].IPAddress)#ches [[organization,dmz]]
-        gprgs = []                                             # List类？ 单纯的表？
+        print('----------------------------------------------------------')
+        gprgs = []
         for he in ches :
+            print('--------------he in ches------------------------------')
+            print(he[0].NetworkInterfaces[0].IPAddress)
+            print('------------------------------------------------------')
             tsas = FindTargetSoftwareApps(he)                  # 查找目标软件应用程序
             print(tsas[0].CPEId)
             for tsa in tsas :
                 print(tsa.Vulnerabilities)
                 print('---------------Vulnerability---------------')               
-                for v in tsa.Vulnerabilities:                # tsa的漏洞
+                for v in tsa.Vulnerabilities:                #遍历tsa中的漏洞
                     print(v)
                     print('-----------------tas.v------------------')
-                    reqprgs = CheckExploitability(v,cp,tsa)    # 检查利用
+                    reqprgs = CheckExploitability(v,cp,tsa)
+                    print('---------------check vul------------------')
+                    print(reqprgs)
+                    print('--------------------------------------')
                     if reqprgs != NULL :                       # 漏洞可以被攻击者利用
                         vgps = FindGainedPrivileges(v,cp,tsa)  # 寻找获得特权
                         gprgs.extend(vgps)
@@ -152,8 +159,9 @@ class PrivilegeStatus:
 def FindTargetSoftwareApps(he):#he [organization,dmz]
     softwareApps = []
     for i in he:
+        print('---------findtargetsoftwareapps--------------')
         print(i.SoftwareApplications[0].CPEId)
-        print('------------------------------')
+        print('---------------------------------------------')
         softwareApps.extend(i.SoftwareApplications)
     return softwareApps
 

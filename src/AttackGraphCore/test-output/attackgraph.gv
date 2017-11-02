@@ -1,5 +1,4 @@
 // Attack Graph
 digraph {
-	"88.132.3.24"
-	InformationSource
+	Privilege [label="<f0>InitialPrivilege.IPAddress|<f1>InitialPrivilege.CPEId"]
 }

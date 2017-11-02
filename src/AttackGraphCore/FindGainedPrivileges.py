@@ -5,6 +5,8 @@ Created on 2017年10月9日
 @author: RHy0ThoM
 '''
 from AttackTemplateModel.RelativeLocation import RelativeLocation
+from AttackGraphStructure.Privilege import Privilege
+
 
 def FindGainedPrivileges(SP,CP,TSA):
 
@@ -24,7 +26,7 @@ def FindGainedPrivileges(SP,CP,TSA):
         print(psc.ExistIn)
         print(BA)
         if psc.ExistIn == BA:              #存在于
-            print('psc.existin')
+            print('---------------psc.existin------------')
             for bsa in TSA.backendSoftwareApps:               #后端软件应用程序
                 gprgs.extend(FormPrivileges(psc,CP.ApplicationName,bsa))
                 #  gprgs添加所有   表格特权 (psc,CP的软件应用,bsa)
@@ -33,7 +35,9 @@ def FindGainedPrivileges(SP,CP,TSA):
             gprgs = FormPrivileges(psc,CP.ApplicationName,TSA)
     return gprgs                                              #gprgs 是一个表
 
-
+'''
+    return Privileges
+'''
 def FormPrivileges(PreConditions, SoftwareApp, TSA):
     for i in TSA.InformationSource:
         print('------cond-----------')
@@ -47,7 +51,15 @@ def FormPrivileges(PreConditions, SoftwareApp, TSA):
             if SoftwareApp == i.name:
                 print(i.Postconditions)
                 print('----------1111---------')
-                return i.Postconditions
+                privilege=Privilege(TSA.HostIPAddress,
+                                    TSA.CPEId,
+                                    SoftwareApp,
+                                    i.Postconditions.Category
+                                    )
+                print('-----------formprivilege information privilege-------')
+                print(privilege.ApplicationName)
+                print('-----------------------------------------------------')
+                return privilege
     else:
         return []
     for i in TSA.vulnerabilities:

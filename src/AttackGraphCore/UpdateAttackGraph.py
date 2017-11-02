@@ -15,7 +15,7 @@ class PrivilegeConjunction:
 
 partialAttackGraph =  AttackGraph()                            # 部分攻击图 攻击图类
 #更新攻击图
-def UpdateAttackGraph(SP,REQPS,GPS,TSA):                       #
+def UpdateAttackGraph(SP,reqprgs,GPS,TSA):                       #
 # 跨越搜索代理代码的全局变量
 # SP可以是信息源的漏洞
 # REQPS是必需的权限
@@ -29,16 +29,22 @@ def UpdateAttackGraph(SP,REQPS,GPS,TSA):                       #
         print('------------informationsoucernode----------------')
         exp = CreateInformationSourceUsageNode(SP,TSA)         #创建信息源使用节点
     partialAttackGraph.addNode(exp)
-    if len(REQPS)>1:
-        print('----------reqps-----------------')
-        prjc = PrivilegeConjunction()                          #特权连接  类？
-        partialAttackGraph.addNode(prjc)                       #部分攻击图 添加节点
-        for reqp in REQPS :
-            partialAttackGraph.addEdge(reqp,prjc)              #部分攻击图 添加边
-    else:
-        print('----------reqps!!!!-----------------')
-        if len(REQPS) == 1:
-            partialAttackGraph.addEdge(REQPS[0],exp)
+    print('-----------REQPS--------------------')
+    print(reqprgs)
+    print('------------------------------------')
+    try:
+        if len(reqprgs)>1:
+            print('----------reqps-----------------')
+            prjc = PrivilegeConjunction()                          #特权连接  类？
+            partialAttackGraph.addNode(prjc)                       #部分攻击图 添加节点
+            for reqp in REQPS :
+                partialAttackGraph.addEdge(reqp,prjc)              #部分攻击图 添加边
+        else:
+            print('----------reqps!!!!-----------------')
+            if len(reqprgs) == 1:
+                partialAttackGraph.addEdge(reqprgs[0],exp)
+    except TypeError:
+        print('TypeError')
     for gp in GPS :
         partialAttackGraph.addEdge(exp,gp)
     print(partialAttackGraph.Node)
@@ -61,6 +67,3 @@ def CreateInformationSourceUsageNode(SP,TSA):
     #Node.ApplicationName = TSA.name
     Node.InformationSourceName = SP.name
     return Node
-
-
-
