@@ -32,19 +32,19 @@ def UpdateAttackGraph(SP,reqprgs,GPS,TSA):                       #
     print('-----------REQPS--------------------')
     print(reqprgs)
     print('------------------------------------')
-    try:
-        if len(reqprgs)>1:
-            print('----------reqps-----------------')
-            prjc = PrivilegeConjunction()                          #特权连接  类？
-            partialAttackGraph.addNode(prjc)                       #部分攻击图 添加节点
-            for reqp in REQPS :
-                partialAttackGraph.addEdge(reqp,prjc)              #部分攻击图 添加边
-        else:
-            print('----------reqps!!!!-----------------')
-            if len(reqprgs) == 1:
-                partialAttackGraph.addEdge(reqprgs[0],exp)
-    except TypeError:
-        print('TypeError')
+    #try:
+    if len(reqprgs)>1:
+        print('----------reqps-----------------')
+        prjc = PrivilegeConjunction()                          #特权连接  类？
+        partialAttackGraph.addNode(prjc)                       #部分攻击图 添加节点
+        for reqp in REQPS :
+            partialAttackGraph.addEdge(reqp,prjc)              #部分攻击图 添加边
+    else:
+        print('----------reqps!!!!-----------------')
+        if len(reqprgs) == 1:
+            partialAttackGraph.addEdge(reqprgs[0],exp)
+   # except TypeError:
+       # print('TypeError')
     for gp in GPS :
         partialAttackGraph.addEdge(exp,gp)
     print(partialAttackGraph.Node)

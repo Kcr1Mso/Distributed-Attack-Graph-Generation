@@ -5,32 +5,36 @@ Created on 2017Äê10ÔÂ16ÈÕ
 @author: RHy0ThoM
 '''
 
-import queue
-from multiprocessing.managers import BaseManager
+from AttackGraphStructure.Privilege import Privilege
 
-task_queue=queue.Queue()
-result_queue=queue.Queue()
+class PrivilegeStatus:
+    def __init__(self, x = False):
+        self.expanded = x
+    def setExpanded(self, x = False):
+        self.expanded = x
 
-def QueueManager(BaseManager):
-    pass
+class Memory:
+    def __init__(self,x,y):
+        self.privileges=x
+        self.status=y
 
-QueueManager.register('get_task_queue',callable=lambda:task_queue)
-QueueManager.register('get_result_queue',callable=lambda:result_queue)
-
-
-
-manager=QueueManager(address=('',5000),authkey=b'abc')
-
-manager.start()
-
-task=manager.get_task_queue()
-result=manager.get_result_queue()
+SharedMemory = []
 
 def WriteToSharedMemory(ip,ips):
-    pass
+    SharedMemory.append(Memory(ip,ips))
 
-def ReadAndUpdateSharedMemory():
-    pass
+def ReadFromSharedMemory(ip):
+    for memory in SharedMemory:
+        if memory.privileges == ip:
+            return memory.status
+    else:
+        return PrivilegeStatus()
 
-def ReadFromSharedMemory(rqp):
-    pass 
+def ReadAndUpdateSharedMemory(ip,ips):
+    for memory in SharedMemory:
+        if memory.privileges == ip:
+            x = memory.status
+            memory.status = ips
+            return x
+    else:
+        return PrivilegeStatus()

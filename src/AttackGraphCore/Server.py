@@ -5,52 +5,39 @@ Created on 2017年10月24日
 @author: RHy0ThoM
 '''
 
+import queue
 from multiprocessing.managers import BaseManager
-from queue import Queue
-from AttackGraphCore.Job import Job
+import random
 
-class Server:
+# 发送任务的队列:
+task_queue = queue.Queue()
+# 接收结果的队列:
+result_queue = queue.Queue()
 
-    def __init__(self):
-        # 派发出去的作业队列
-        self.dispatched_job_queue = Queue()
-        # 完成的作业队列
-        self.finished_job_queue = Queue()
+# 从BaseManager继承的QueueManager:
+class QueueManager(BaseManager):
+    pass
 
-    def get_dispatched_job_queue(self):
-        return self.dispatched_job_queue
-
-    def get_finished_job_queue(self):
-        return self.finished_job_queue
-
-    def start(self):
-        # 把派发作业队列和完成作业队列注册到网络上
-        BaseManager.register('get_dispatched_job_queue', callable=self.get_dispatched_job_queue)
-        BaseManager.register('get_finished_job_queue', callable=self.get_finished_job_queue)
-
-        # 监听端口和启动服务
-        manager = BaseManager(address=('0.0.0.0', 8888), authkey='jobs')
-        manager.start()
-
-        # 使用上面注册的方法获取队列
-        dispatched_jobs = manager.get_dispatched_job_queue()
-        finished_jobs = manager.get_finished_job_queue()
-
-        # 这里一次派发10个作业，等到10个作业都运行完后，继续再派发10个作业
-        job_id = 0
-        while True:
-            for i in range(0, 10):
-                job_id = job_id + 1
-                job = Job(job_id)
-                print('Dispatch job: %s' % job.job_id)
-                dispatched_jobs.put(job)
-
-            while not dispatched_jobs.empty():
-                job = finished_jobs.get(60)
-                print('Finished Job: %s' % job.job_id)
-
-        manager.shutdown()
-
-if __name__ == "__main__":
-    Server = Server()
-    Server.start()
+# 把两个Queue都注册到网络上, callable参数关联了Queue对象:
+QueueManager.register('get_task_queue', callable=lambda: task_queue)
+QueueManager.register('get_result_queue', callable=lambda: result_queue)
+# 绑定端口5000, 设置验证码'abc':
+manager = QueueManager(address=('10.1.112.30', 5000), authkey=b'abc')
+# 启动Queue:
+manager.start()
+# 获得通过网络访问的Queue对象:
+task = manager.get_task_queue()
+result = manager.get_result_queue()
+# 放几个任务进去:
+for i in range(10):
+    n = random.randint(0, 10000)
+    print('Put task %d...' % n)
+    task.put(n)
+# 从result队列读取结果:
+print('Try get results...')
+for i in range(10):
+    r = result.get(timeout=60)
+    print('Result: %s' % r)
+# 关闭:
+manager.shutdown()
+print('master exit.')

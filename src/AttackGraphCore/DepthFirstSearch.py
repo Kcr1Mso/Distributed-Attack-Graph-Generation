@@ -9,6 +9,7 @@ from AttackGraphCore.CheckExploitability import CheckExploitability
 from AttackGraphCore.UpdateAttackGraph import UpdateAttackGraph
 from _overlapped import NULL
 from AttackTemplateModel.Vulnerability import Vulnerability
+from AttackGraphCore.VirtualSharedMemory import *
 
 #栈操作出错
 class StackException(Exception):                  #栈操作出错
@@ -67,9 +68,9 @@ def PERFORMDFS(RHG,IPRGS):
     foundPrivileges =  []
     
     for ip in IPRGS :
-        #ips = PrivilegeStatus()                                #特权状态类？   应该是个网络主机
-        #ips.setExpanded(True)                                  # 设置展开
-        #SharedMemory.update({ip:ips})                          # 写入共享内存
+        ips = PrivilegeStatus()                                #特权状态类？   应该是个网络主机
+        ips.setExpanded(True)                                  # 设置展开
+        WriteToSharedMemory(ip, ips)                          # 写入共享内存
         MainStack.push(ip)
         foundPrivileges.append(ip)                             # 发现特权
         print('----------------foundprivilegs------------------')
@@ -98,6 +99,9 @@ def PERFORMDFS(RHG,IPRGS):
         print(ches[0][1].NetworkInterfaces[0].IPAddress)#ches [[organization,dmz]]
         print('----------------------------------------------------------')
         gprgs = []
+        print('-----------shared------------')
+        print(SharedMemory)
+        print('-----------------------------')
         for he in ches :
             print('--------------he in ches------------------------------')
             print(he[0].NetworkInterfaces[0].IPAddress)
@@ -118,7 +122,7 @@ def PERFORMDFS(RHG,IPRGS):
                         vgps = FindGainedPrivileges(v,cp,tsa)  # 寻找获得特权
                         gprgs.extend(vgps)
                         UpdateAttackGraph(v,reqprgs,vgps,tsa)
-    
+
                 for tis in tsa.InformationSource:                  # 信息来源
                     reqprgs = CheckExploitability(tis,cp,tsa)  # 检查利用
                     print('---------------check------------------')
@@ -135,18 +139,15 @@ def PERFORMDFS(RHG,IPRGS):
             newgps = PrivilegeStatus()
             newgps.setExpanded(True)
             oldgps = SharedMemory.get(gp)      # 读和更新共享内存 
-            SharedMemory.update({gp:newgps})
+            ReadAndUpdateSharedMemory(gp,newgps)
             # 读取和更新共享内存是一种原子操作，可更新其输入权限的状态并返回其旧状态
             if oldgps.expanded == False :
                 MainStack.push(gp)
             foundPrivileges.append(gp)
 
-def WriteToSharedMemory(ip,ips):
-    pass
-
-def GetWorkFromOtherAgents():
-    pass
-
+    print('-----------shared------------')
+    print(SharedMemory)
+    print('-----------------------------')
 
 #权限状态类：用来标记权限是否遍历过
 class PrivilegeStatus:
@@ -164,7 +165,3 @@ def FindTargetSoftwareApps(he):#he [organization,dmz]
         print('---------------------------------------------')
         softwareApps.extend(i.SoftwareApplications)
     return softwareApps
-
-def ReadAndUpdateSharedMemory():
-    pass
-

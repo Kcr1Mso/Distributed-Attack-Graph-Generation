@@ -5,42 +5,41 @@ Created on 2017年10月24日
 @author: RHy0ThoM
 '''
 
-import time
-from queue import Queue
+import queue
+import time, sys
 from multiprocessing.managers import BaseManager
-from AttackGraphCore.Job import Job
+from AttackGraphCore.DepthFirstSearch import PERFORMDFS
+from NetworkModel.HyperGraph import HyperGraph
+from AttackGraphStructure.AttackGraph import AttackGraph
 
 
-class Client:
+# 创建类似的QueueManager:
+class QueueManager(BaseManager):
+    pass
 
-    def __init__(self):
-        # 派发出去的作业队列
-        self.dispatched_job_queue = Queue()
-        # 完成的作业队列
-        self.finished_job_queue = Queue()
+# 由于这个QueueManager只从网络上获取Queue，所以注册时只提供名字:
+QueueManager.register('get_task_queue')
+QueueManager.register('get_result_queue')
 
-    def start(self):
-        # 把派发作业队列和完成作业队列注册到网络上
-        BaseManager.register('get_dispatched_job_queue')
-        BaseManager.register('get_finished_job_queue')
-
-        # 连接master
-        server = '127.0.0.1'
-        print('Connect to server %s...' % server)
-        manager = BaseManager(address=(server, 8888), authkey='jobs')
-        manager.connect()
-
-        # 使用上面注册的方法获取队列
-        dispatched_jobs = manager.get_dispatched_job_queue()
-        finished_jobs = manager.get_finished_job_queue()
-
-        # 运行作业并返回结果，这里只是模拟作业运行，所以返回的是接收到的作业
-        while True:
-            job = dispatched_jobs.get(timeout=1)
-            print('Run job: %s ' % job.job_id)
-            time.sleep(1)
-            finished_jobs.put(job)
-
-if __name__ == "__main__":
-    Client = Client()
-    Client.start()
+# 连接到服务器，也就是运行task_master.py的机器:
+server_addr = '10.1.112.30'
+print('Connect to server %s...' % server_addr)
+# 端口和验证码注意保持与task_master.py设置的完全一致:
+m = QueueManager(address=(server_addr, 5000), authkey=b'abc')
+# 从网络连接:
+m.connect()
+# 获取Queue的对象:
+task = m.get_task_queue()
+result = m.get_result_queue()
+# 从task队列取任务,并把结果写入result队列:
+TargetNetwork=HyperGraph( )
+IPRGS=[]
+partialAttackGraph=AttackGraph()
+try:
+    PERFORMDFS(TargetNetwork, IPRGS)
+    time.sleep(1)
+    result.put()
+except queue.Empty:
+    print('task queue is empty.')
+# 处理结束:
+print('worker exit.')
