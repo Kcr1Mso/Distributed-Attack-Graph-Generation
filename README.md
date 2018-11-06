@@ -1,4 +1,4 @@
-# Distributed Attack Graph Gerenation
+# Distributed Attack Graph Generation
 
 
 Master.py<br>
