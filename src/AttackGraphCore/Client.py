@@ -12,8 +12,9 @@ from AttackGraphCore.DepthFirstSearch import PERFORMDFS
 from NetworkModel.HyperGraph import HyperGraph
 from AttackGraphStructure.AttackGraph import AttackGraph
 
+select ${dt}
 
-# �������Ƶ�QueueManager:111
+# �������Ƶ�QueueManager:111111
 class QueueManager(BaseManager):
     pass
 
