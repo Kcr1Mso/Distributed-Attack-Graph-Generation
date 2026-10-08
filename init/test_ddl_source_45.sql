@@ -1,0 +1,19 @@
+DROP TABLE IF EXISTS ${FIDI_PUB}.`test_ddl_source_45`;
+CREATE TABLE IF NOT EXISTS ${FIDI_PUB}.`test_ddl_source_45` (
+  `id` STRING COMMENT '主键-45'
+)
+COMMENT '批量测试实体-45'
+PARTITIONED BY (
+  `DT` STRING COMMENT '数据日期'
+)
+STORED AS PARQUET TBLPROPERTIES ('parquet.compression'='SNAPPY');
+
+DROP TABLE IF EXISTS ${FIDI_PUB}.`test_ddl_source_44`;
+CREATE TABLE IF NOT EXISTS ${FIDI_PUB}.`test_ddl_source_44` (
+  `id` STRING COMMENT '主键-44'
+)
+COMMENT '批量测试实体-44'
+PARTITIONED BY (
+  `DT` STRING COMMENT '数据日期'
+)
+STORED AS PARQUET TBLPROPERTIES ('parquet.compression'='SNAPPY');
