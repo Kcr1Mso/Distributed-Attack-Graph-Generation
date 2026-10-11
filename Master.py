@@ -3,7 +3,7 @@ import Queue
 import time, sys
 import pygraphviz as pgv
 from multiprocessing.managers import BaseManager
-#条件11
+#条件1122
 class Condition:
     def __init__(self, Category = '', ExistIn = '',CPEID = '',IPAddress = ''):
         self.CPEID = CPEID
